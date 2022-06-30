@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../common/ui_strings.dart';
+import '../utils/uuid_format.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,9 +17,11 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   final Uuid _uuid = const Uuid();
   late String _uuidValue;
+
+  late TabController _tabController;
 
   void _genNewUuid() {
     _uuidValue = _uuid.v4();
@@ -27,7 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(vsync: this, length: UIStrings.home_formatTabs.length);
+    _tabController.addListener(() {
+      setState(() {});
+    });
     _genNewUuid();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   void _onFabPressed() {
@@ -38,29 +51,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 6,
-      child: Scaffold(
-        appBar: _AppBar(
-          onAction: (_AppBarOverflowActions action) {},
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Text(
-              _uuidValue,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                fontFeatures: [const FontFeature.tabularFigures()],
-              ),
+    return Scaffold(
+      appBar: _AppBar(
+        tabController: _tabController,
+        onAction: (_AppBarOverflowActions action) {},
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Text(
+            formatUuid(_uuidValue, _tabController.index),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+              fontFeatures: [const FontFeature.tabularFigures()],
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: UIStrings.home_fabTooltip,
-          onPressed: _onFabPressed,
-          child: const Icon(Icons.shuffle),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: UIStrings.home_fabTooltip,
+        onPressed: _onFabPressed,
+        child: const Icon(Icons.shuffle),
       ),
     );
   }
@@ -70,7 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
 enum _AppBarOverflowActions { copy, share }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({required this.onAction});
+  const _AppBar({
+    this.tabController,
+    required this.onAction,
+  });
+
+  final TabController? tabController;
 
   /// The callback that is called when an app bar action is pressed.
   final Function(_AppBarOverflowActions action) onAction;
@@ -95,16 +111,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ],
-      bottom: const TabBar(
+      bottom: TabBar(
+        controller: tabController,
         isScrollable: true,
-        tabs: [
-          Tab(text: 'Standard'),
-          Tab(text: 'Digits'),
-          Tab(text: 'Braces'),
-          Tab(text: 'Parentheses'),
-          Tab(text: 'URN'),
-          Tab(text: 'Base64'),
-        ],
+        tabs: UIStrings.home_formatTabs.keys
+            .map((format) => Tab(text: UIStrings.home_formatTabs[format]))
+            .toList(),
       ),
     );
   }
