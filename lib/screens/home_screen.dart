@@ -71,15 +71,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             .then((value) => showSnackBar(context, UIStrings.home_copiedSnackBar));
         break;
       case HomeAppBarActions.share:
-        if (Platform.isAndroid) {
-          AndroidIntent intent = AndroidIntent(
-            action: 'android.intent.action.SEND',
-            type: 'plain/text',
-            data: _uuidFormatValue,
-            // arguments: {'android.intent.extra.TEXT': _uuidFormatValue},
-          );
-          intent.launchChooser('Share UUID');
-        }
+        shareText(_uuidFormatValue, 'Share UUID');
         break;
       // Perform a web search for the Uuid value in the current format.
       case HomeAppBarActions.uniquenessSearch:

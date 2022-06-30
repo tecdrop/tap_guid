@@ -35,3 +35,17 @@ Future<void> webSearch(String query) async {
     await intent.launch();
   }
 }
+
+/// Performs a web search for the specified text.
+///
+/// This works only on Android platforms.
+Future<void> shareText(String text, String title) async {
+  if (Platform.isAndroid) {
+    AndroidIntent intent = AndroidIntent(
+      action: 'android.intent.action.SEND',
+      type: 'text/plain',
+      arguments: <String, String>{'android.intent.extra.TEXT': text},
+    );
+    await intent.launchChooser(title);
+  }
+}
