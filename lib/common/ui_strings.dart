@@ -18,12 +18,17 @@ class UIStrings {
   // Home Screen
   // -----------------------------------------------------------------------------------------------
 
-  static const String home_screenTitle = appName;
+  static const String home_screenTitle = 'Generate UUIDs';
   static const String home_fabTooltip = 'Generate a new UUID';
   static const String home_copyTooltip = 'Copy UUID to clipboard';
+  static const String home_copiedSnackBar = 'UUID copied to clipboard.';
   static const String home_shareAction = 'Share...';
+  static const String home_uniquenessSearchAction = 'Uniqueness search';
+  static const String home_settingsAction = 'Settings';
+  static const String home_rateAction = 'Rate app';
+  static const String home_helpAction = 'Help';
+  static const String home_goProAction = 'Go Pro';
 
-  // static const home_formatTabs = ['Standard', 'Digits', 'Braces', 'Parentheses', 'URN', 'Base64'];
 
   static const Map<UuidFormat, String> home_formatTabs = <UuidFormat, String>{
     UuidFormat.standard: 'Standard',
