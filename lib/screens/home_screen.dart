@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 
 import '../common/app_urls.dart';
-import '../common/ui_strings.dart';
+import '../common/strings.dart' as strings;
 import '../utils/utils.dart';
 import '../utils/uuid_format.dart';
 import '../widgets/home_app_bar.dart';
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: UIStrings.home_formatTabs.length);
+    _tabController = TabController(vsync: this, length: strings.uuidFormatTabs.length);
     _tabController.addListener(() {
       setState(() {
         _updateUuidFormat();
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     switch (action) {
       case HomeAppBarActions.copy:
         Clipboard.setData(ClipboardData(text: _uuidFormatValue))
-            .then((value) => showSnackBar(context, UIStrings.home_copiedSnackBar));
+            .then((value) => showSnackBar(context, strings.copiedSnackBar));
         break;
       case HomeAppBarActions.share:
         shareText(_uuidFormatValue, 'Share UUID');
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: UIStrings.home_fabTooltip,
+        tooltip: strings.newUuidTooltip,
         onPressed: _onFabPressed,
         child: const Icon(Icons.shuffle),
       ),

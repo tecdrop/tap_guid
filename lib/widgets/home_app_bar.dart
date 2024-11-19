@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../common/ui_strings.dart';
+import '../common/strings.dart' as strings;
 
 /// The actions available in the app bar.
 enum HomeAppBarActions { copy, share, uniquenessSearch, settings, rate, help, goPro }
@@ -24,11 +24,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(UIStrings.home_screenTitle),
+      title: const Text(strings.homeScreenTitle),
       actions: [
         IconButton(
           icon: const Icon(Icons.content_copy_rounded),
-          tooltip: UIStrings.home_copyTooltip,
+          tooltip: strings.copyTooltip,
           onPressed: () => onAction(HomeAppBarActions.copy),
         ),
         PopupMenuButton<HomeAppBarActions>(
@@ -36,29 +36,29 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           itemBuilder: (BuildContext context) => <PopupMenuEntry<HomeAppBarActions>>[
             const PopupMenuItem<HomeAppBarActions>(
               value: HomeAppBarActions.share,
-              child: Text(UIStrings.home_shareAction),
+              child: Text(strings.shareAction),
             ),
             const PopupMenuItem<HomeAppBarActions>(
               value: HomeAppBarActions.uniquenessSearch,
-              child: Text(UIStrings.home_uniquenessSearchAction),
+              child: Text(strings.uniquenessSearchAction),
             ),
             const PopupMenuDivider(),
             const PopupMenuItem<HomeAppBarActions>(
               value: HomeAppBarActions.settings,
-              child: Text(UIStrings.home_settingsAction),
+              child: Text(strings.settingsAction),
             ),
             const PopupMenuItem<HomeAppBarActions>(
               value: HomeAppBarActions.rate,
-              child: Text(UIStrings.home_rateAction),
+              child: Text(strings.rateAction),
             ),
             const PopupMenuItem<HomeAppBarActions>(
               value: HomeAppBarActions.help,
-              child: Text(UIStrings.home_helpAction),
+              child: Text(strings.helpAction),
             ),
             const PopupMenuDivider(),
             const PopupMenuItem<HomeAppBarActions>(
               value: HomeAppBarActions.goPro,
-              child: Text(UIStrings.home_goProAction),
+              child: Text(strings.goProAction),
             ),
           ],
         ),
@@ -66,8 +66,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: TabBar(
         controller: tabController,
         isScrollable: true,
-        tabs: UIStrings.home_formatTabs.keys
-            .map((format) => Tab(text: UIStrings.home_formatTabs[format]))
+        tabs: strings.uuidFormatTabs.keys
+            .map((format) => Tab(text: strings.uuidFormatTabs[format]))
             .toList(),
       ),
     );
