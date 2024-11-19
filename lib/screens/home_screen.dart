@@ -9,8 +9,10 @@ import 'package:uuid/uuid.dart';
 
 import '../common/app_urls.dart';
 import '../common/strings.dart' as strings;
+import '../common/types.dart';
+import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart';
-import '../utils/uuid_format.dart';
+import '../utils/uuid_utils.dart';
 import '../widgets/home_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   void _updateUuidFormat() {
-    _uuidFormatValue = formatUuid(_uuidValue, _tabController.index);
+    _uuidFormatValue = formatUuid(_uuidValue, UuidFormat.values[_tabController.index]);
   }
 
   @override
@@ -91,7 +93,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final Color backColor = getUuidColor(_uuidValue);
+    final Color foreColor = color_utils.contrastColor(backColor);
+
     return Scaffold(
+      backgroundColor: backColor,
       appBar: HomeAppBar(
         tabController: _tabController,
         onAction: _onAppBarAction,
@@ -102,13 +108,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           child: Text(
             _uuidFormatValue,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              color: foreColor,
               fontFeatures: [const FontFeature.tabularFigures()],
             ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.large(
+        backgroundColor: foreColor,
+        foregroundColor: color_utils.contrastColor(foreColor),
         tooltip: strings.newUuidTooltip,
         onPressed: _onFabPressed,
         child: const Icon(Icons.shuffle),
