@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -14,6 +15,7 @@ import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart';
 import '../utils/uuid_utils.dart';
 import '../widgets/home_app_bar.dart';
+import '../widgets/uniform_wrappable_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -104,17 +106,53 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Text(
+          padding: const EdgeInsets.all(16.0),
+          child: UniformWrappableText(
             _uuidFormatValue,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: foreColor,
-              fontFeatures: [const FontFeature.tabularFigures()],
-            ),
+            // textAlign: TextAlign.center,
+            // softWrap: false,
+            // overflow: TextOverflow.fade,
+
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  color: foreColor,
+                  // fontFamily: 'monospace',
+                  // fontFeatures: [const FontFeature.tabularFigures()],
+                ),
+            // style: GoogleFonts.robotoMono(
+            //   // textStyle: Theme.of(context).textTheme.headlineMedium,
+            //   color: foreColor,
+            //   fontSize: 50.0,
+
+            //   // letterSpacing: 10.0,
+
+            //   // fontFeatures: [const FontFeature.tabularFigures()],
+            // ),
           ),
         ),
       ),
+      // body: Expanded(
+      //   child: Text(
+      //     _uuidFormatValue,
+      //     // textAlign: TextAlign.center,
+      //     // softWrap: false,
+      //     // overflow: TextOverflow.fade,
+
+      //     // style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+      //     //       color: foreColor,
+      //     //       fontFamily: 'monospace',
+      //     //       // fontFeatures: [const FontFeature.tabularFigures()],
+      //     //     ),
+      //     style: GoogleFonts.robotoMono(
+      //       // textStyle: Theme.of(context).textTheme.headlineMedium,
+      //       color: foreColor,
+      //       fontSize: 50.0,
+
+      //       // letterSpacing: 10.0,
+
+      //       // fontFeatures: [const FontFeature.tabularFigures()],
+      //     ),
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton.large(
         backgroundColor: foreColor,
         foregroundColor: color_utils.contrastColor(foreColor),
