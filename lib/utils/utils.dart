@@ -2,10 +2,8 @@
 // Use of this source code is governed by a user license that can be
 // found in the LICENSE file.
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 
-import 'package:android_intent_plus/android_intent.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 /// Shows a default [SnackBar] with the specified text, after hiding any previous snackbars.
@@ -20,6 +18,7 @@ void showSnackBar(BuildContext context, String text) {
 ///
 /// Shows an error [SnackBar] if there is no support for launching the URL.
 Future<void> launchUrlWrapper(BuildContext context, String url) async {
+  // TODO: Reimplement using launchUrl
   if (!await launchUrlString(url)) showSnackBar(context, 'Failed to open $url');
 }
 
@@ -27,25 +26,29 @@ Future<void> launchUrlWrapper(BuildContext context, String url) async {
 ///
 /// This works only on Android platforms.
 Future<void> webSearch(String query) async {
-  if (Platform.isAndroid) {
-    AndroidIntent intent = AndroidIntent(
-      action: 'android.intent.action.WEB_SEARCH',
-      arguments: {'query': query},
-    );
-    await intent.launch();
-  }
+  // TODO: Implement the webSearch function in a cross-platform way.
+
+  // if (Platform.isAndroid) {
+  //   AndroidIntent intent = AndroidIntent(
+  //     action: 'android.intent.action.WEB_SEARCH',
+  //     arguments: {'query': query},
+  //   );
+  //   await intent.launch();
+  // }
 }
 
 /// Performs a web search for the specified text.
 ///
 /// This works only on Android platforms.
 Future<void> shareText(String text, String title) async {
-  if (Platform.isAndroid) {
-    AndroidIntent intent = AndroidIntent(
-      action: 'android.intent.action.SEND',
-      type: 'text/plain',
-      arguments: <String, String>{'android.intent.extra.TEXT': text},
-    );
-    await intent.launchChooser(title);
-  }
+  // TODO: Implement the shareText function in a cross-platform way.
+
+  // if (Platform.isAndroid) {
+  //   AndroidIntent intent = AndroidIntent(
+  //     action: 'android.intent.action.SEND',
+  //     type: 'text/plain',
+  //     arguments: <String, String>{'android.intent.extra.TEXT': text},
+  //   );
+  //   await intent.launchChooser(title);
+  // }
 }
