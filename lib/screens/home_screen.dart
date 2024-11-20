@@ -15,6 +15,7 @@ import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
 import '../widgets/uniform_wrappable_text.dart';
+import 'settings_screen.dart';
 
 /// The home screen of the app.
 ///
@@ -124,8 +125,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         utils.launchUrlExternal(context, AppUrls.rateActionUrl);
         break;
 
+      // Open the app settings screen and update the display when the user returns
       case _AppBarActions.settings:
-        // TODO: Handle this case.
+        () async {
+          await utils.navigateTo(context: context, screen: const SettingsScreen());
+          setState(() => _updateUuidFormat());
+        }();
         break;
 
       // Open the app home page in the default browser.
@@ -144,6 +149,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final Color backColor = getUuidColor(_uuidValue);
     final Color foreColor = color_utils.contrastColor(backColor);
 
+    final EdgeInsets padding = const EdgeInsets.all(16.0);
+
+    // The UUID display with uniform width characters
+    final Widget uuidText = UniformWrappableText(
+      _uuidFormatValue,
+      style: _uuidTextStyle.copyWith(color: prefs.uuidColor.value ? foreColor : null),
+      characterWidth: _uuidCharacterWidth,
+    );
+
     return Scaffold(
       // The app bar with tabs and actions
       appBar: _AppBar(
@@ -151,27 +165,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         onAction: _onAppBarAction,
       ),
 
-      // Use an animated container to animate the background color change
-      body: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        color: backColor,
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(16.0),
-
-        // Display the UUID in the selected format with uniform width characters
-        child: UniformWrappableText(
-          _uuidFormatValue,
-          style: _uuidTextStyle.copyWith(color: foreColor),
-          characterWidth: _uuidCharacterWidth,
-        ),
-      ),
+      body: prefs.uuidColor.value
+          // Use an animated container to animate the background color change if color is enabled
+          ? AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              color: backColor,
+              width: double.infinity,
+              height: double.infinity,
+              padding: padding,
+              alignment: Alignment.center,
+              child: uuidText,
+            )
+          : Padding(
+              padding: padding,
+              child: Center(child: uuidText),
+            ),
 
       // The refresh FAB that generates a new UUID
       floatingActionButton: FloatingActionButton.large(
-        backgroundColor: foreColor,
-        foregroundColor: color_utils.contrastColor(foreColor),
+        backgroundColor: prefs.uuidColor.value ? foreColor : null,
+        foregroundColor: prefs.uuidColor.value ? color_utils.contrastColor(foreColor) : null,
         tooltip: strings.newUuidTooltip,
         onPressed: _onFabPressed,
         child: const Icon(Icons.refresh),

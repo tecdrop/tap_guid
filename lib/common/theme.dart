@@ -5,6 +5,8 @@
 
 import 'package:flutter/material.dart';
 
+const Color appColor = Color(0xFF533B7C);
+
 /// Returns the light or dark theme for the app.
 ThemeData getAppTheme(Brightness brightness) {
   final Color backgroundColor = brightness == Brightness.dark ? Colors.black : Colors.white;
@@ -14,43 +16,19 @@ ThemeData getAppTheme(Brightness brightness) {
     brightness: brightness,
     useMaterial3: true,
     scaffoldBackgroundColor: backgroundColor,
-    // drawerTheme: DrawerThemeData(
-    //   backgroundColor: backgroundColor,
-    // ),
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: backgroundColor,
-    //   foregroundColor: foregroundColor,
-    // ),
-    // bottomAppBarTheme: BottomAppBarTheme(
-    //   color: backgroundColor,
-    // ),
-    // popupMenuTheme: PopupMenuThemeData(
-    //   color: backgroundColor,
-    // ),
+    colorSchemeSeed: appColor,
+    appBarTheme: AppBarTheme(
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+    ),
     tabBarTheme: TabBarTheme(
-      // labelColor: foregroundColor,
-      // unselectedLabelColor: foregroundColor.withOpacity(0.5),
-      indicatorColor: foregroundColor,
-      labelColor: foregroundColor,
       unselectedLabelColor: foregroundColor.withOpacity(0.5),
+      labelColor: foregroundColor,
+      indicatorColor: foregroundColor,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
     ),
-    // dialogTheme: DialogTheme(
-    //   backgroundColor: backgroundColor,
-    // ),
-    // textButtonTheme: TextButtonThemeData(
-    //   style: TextButton.styleFrom(
-    //     foregroundColor: foregroundColor,
-    //   ),
-    // ),
-    // filledButtonTheme: FilledButtonThemeData(
-    //   style: FilledButton.styleFrom(
-    //     backgroundColor: foregroundColor,
-    //     foregroundColor: backgroundColor,
-    //   ),
-    // ),
   );
 }

@@ -9,6 +9,24 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../common/strings.dart' as strings;
 
+/// Navigates to the specified [screen] and returns the result.
+Future<T?> navigateTo<T>({
+  BuildContext? context,
+  NavigatorState? navigator,
+  required Widget screen,
+  RouteSettings? settings,
+}) async {
+  assert(context != null || navigator != null, 'Either context or navigator must be specified');
+
+  navigator ??= Navigator.of(context!);
+  return await navigator.push(
+    MaterialPageRoute<T>(
+      settings: settings,
+      builder: (context) => screen,
+    ),
+  );
+}
+
 /// Shows a default [SnackBar] with the specified text, after hiding any previous snackbars.
 void showSnackBar(BuildContext context, String text) {
   final SnackBar snackBar = SnackBar(content: Text(text));
