@@ -3,11 +3,11 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:share_plus/share_plus.dart';
 
+import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
+import '../common/app_preferences.dart' as prefs;
 import '../common/app_urls.dart';
 import '../common/strings.dart' as strings;
 import '../common/types.dart';
@@ -54,7 +54,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   /// Updates the UUID format display based on the current tab.
   void _updateUuidFormat() {
-    _uuidFormatValue = formatUuid(_uuidValue, UuidFormat.values[_tabController.index]);
+    _uuidFormatValue = formatUuid(
+      _uuidValue,
+      format: UuidFormat.values[_tabController.index],
+      uppercase: prefs.uppercaseDigits.value,
+    );
   }
 
   @override
@@ -66,6 +70,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       // Update the UUID format display when the tab changes
       setState(() => _updateUuidFormat());
     });
+
+    // Load app preferences
+    () async {
+      await prefs.load();
+      setState(() {});
+    }();
 
     // Generate a new UUID when the screen is first displayed
     _genNewUuid();

@@ -10,23 +10,25 @@ import 'package:uuid/uuid.dart';
 import '../common/types.dart';
 
 /// Formats a UUID string according to the specified format.
-String formatUuid(String uuid, UuidFormat uuidFormat) {
-  switch (uuidFormat) {
-    case UuidFormat.standard:
-      return uuid;
-    case UuidFormat.digits:
-      return uuid.replaceAll(RegExp(r'-'), '');
-    case UuidFormat.braces:
-      return '{$uuid}';
-    case UuidFormat.parentheses:
-      return '($uuid)';
-    case UuidFormat.urn:
-      return 'urn:uuid:$uuid';
-    case UuidFormat.base64:
-      return base64.encode(Uuid.parse(uuid));
-    case UuidFormat.base64url:
-      return base64Url.encode(Uuid.parse(uuid));
-  }
+String formatUuid(
+  String uuid, {
+  UuidFormat format = UuidFormat.standard,
+  bool uppercase = false,
+}) {
+  final String formattedUuid = switch (format) {
+    UuidFormat.standard => uuid,
+    UuidFormat.digits => uuid.replaceAll(RegExp(r'-'), ''),
+    UuidFormat.braces => '{$uuid}',
+    UuidFormat.parentheses => '($uuid)',
+    UuidFormat.urn => 'urn:uuid:$uuid',
+    UuidFormat.base64 => base64.encode(Uuid.parse(uuid)),
+    UuidFormat.base64url => base64Url.encode(Uuid.parse(uuid)),
+  };
+
+  // Uppercase the formatted UUID if required and if it is not base64 or base64url
+  return uppercase && format != UuidFormat.base64 && format != UuidFormat.base64url
+      ? formattedUuid.toUpperCase()
+      : formattedUuid;
 }
 
 /// Creates a [Color] from a standard UUID string.
