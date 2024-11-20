@@ -3,8 +3,11 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../common/strings.dart' as strings;
 
 /// Shows a default [SnackBar] with the specified text, after hiding any previous snackbars.
 void showSnackBar(BuildContext context, String text) {
@@ -14,12 +17,9 @@ void showSnackBar(BuildContext context, String text) {
     ..showSnackBar(snackBar);
 }
 
-/// Launches the specified [URL] in the mobile platform.
-///
-/// Shows an error [SnackBar] if there is no support for launching the URL.
-Future<void> launchUrlWrapper(BuildContext context, String url) async {
-  // TODO: Reimplement using launchUrl
-  if (!await launchUrlString(url)) showSnackBar(context, 'Failed to open $url');
+/// Launches the specified [URL] in the mobile platform, using the default external application.
+Future<void> launchUrlExternal(BuildContext context, String url) async {
+  await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 }
 
 /// Performs a web search for the specified text.
@@ -37,18 +37,21 @@ Future<void> webSearch(String query) async {
   // }
 }
 
-/// Performs a web search for the specified text.
-///
-/// This works only on Android platforms.
-Future<void> shareText(String text, String title) async {
-  // TODO: Implement the shareText function in a cross-platform way.
+/// Shows a [SnackBar] with the specified [text] across all registered [Scaffold]s.
+void showSnackBarForAsync(ScaffoldMessengerState messengerState, String text) {
+  final SnackBar snackBar = SnackBar(content: Text(text));
+  messengerState
+    ..removeCurrentSnackBar()
+    ..showSnackBar(snackBar);
+}
 
-  // if (Platform.isAndroid) {
-  //   AndroidIntent intent = AndroidIntent(
-  //     action: 'android.intent.action.SEND',
-  //     type: 'text/plain',
-  //     arguments: <String, String>{'android.intent.extra.TEXT': text},
-  //   );
-  //   await intent.launchChooser(title);
-  // }
+/// Stores the given text on the clipboard, and shows a [SnackBar] on success and on failure.
+Future<void> copyToClipboard(BuildContext context, String value) async {
+  ScaffoldMessengerState messengerState = ScaffoldMessenger.of(context);
+  try {
+    await Clipboard.setData(ClipboardData(text: value));
+    showSnackBarForAsync(messengerState, strings.copiedSnack(value));
+  } catch (error) {
+    showSnackBarForAsync(messengerState, strings.copiedErrorSnack(value));
+  }
 }

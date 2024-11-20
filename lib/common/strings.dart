@@ -16,8 +16,11 @@ const String appName = 'TapGuid';
 
 const String homeScreenTitle = 'TapGuid';
 const String newUuidTooltip = 'Generate a new UUID';
+
 const String copyTooltip = 'Copy UUID to clipboard';
-const String copiedSnackBar = 'UUID copied to clipboard.';
+String copiedSnack(String value) => '$value copied to clipboard';
+String copiedErrorSnack(String value) => 'Copy to clipboard failed: $value';
+
 const String shareTooltip = 'Share UUID';
 const String uniquenessSearchAction = 'Uniqueness search';
 const String settingsAction = 'Settings';
@@ -34,3 +37,5 @@ const Map<UuidFormat, String> uuidFormatTabs = <UuidFormat, String>{
   UuidFormat.base64: 'Base64',
   UuidFormat.base64url: 'Base64Url',
 };
+
+const String shareSubject = 'UUID from TapGuid';

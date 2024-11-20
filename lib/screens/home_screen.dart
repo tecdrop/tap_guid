@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -11,7 +12,7 @@ import '../common/app_urls.dart';
 import '../common/strings.dart' as strings;
 import '../common/types.dart';
 import '../utils/color_utils.dart' as color_utils;
-import '../utils/utils.dart';
+import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
 import '../widgets/uniform_wrappable_text.dart';
 
@@ -93,28 +94,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   /// Perform the actions of the app bar.
   void _onAppBarAction(_AppBarActions action) {
     switch (action) {
+      // Copy the UUID value in the current format to the clipboard
       case _AppBarActions.copy:
-        Clipboard.setData(ClipboardData(text: _uuidFormatValue))
-            .then((value) => showSnackBar(context, strings.copiedSnackBar));
+        utils.copyToClipboard(context, _uuidFormatValue);
         break;
+
+      // Share the UUID value in the current format via the platform's share dialog
       case _AppBarActions.share:
-        shareText(_uuidFormatValue, 'Share UUID');
+        Share.share(_uuidFormatValue, subject: strings.shareSubject);
         break;
+
       // Perform a web search for the Uuid value in the current format.
       case _AppBarActions.uniquenessSearch:
-        webSearch('"$_uuidFormatValue"');
+        utils.webSearch('"$_uuidFormatValue"');
         break;
+
       // Open the Google Play app page to allow the user to rate the app.
       case _AppBarActions.rate:
-        launchUrlWrapper(context, AppUrls.rateActionUrl);
+        utils.launchUrlExternal(context, AppUrls.rateActionUrl);
         break;
+
       case _AppBarActions.settings:
         // TODO: Handle this case.
         break;
+
       // Open the app home page in the default browser.
       case _AppBarActions.help:
-        launchUrlWrapper(context, AppUrls.helpActionUrl);
+        utils.launchUrlExternal(context, AppUrls.helpActionUrl);
         break;
+
       case _AppBarActions.goPro:
         // TODO: Handle this case.
         break;
