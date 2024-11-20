@@ -4,15 +4,15 @@
 
 import 'types.dart';
 
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // App
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 const String appName = 'TapGuid';
 
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Home Screen
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 const String homeScreenTitle = 'TapGuid';
 const String newUuidTooltip = 'Generate a new UUID';
@@ -21,6 +21,7 @@ const String copyTooltip = 'Copy UUID to clipboard';
 String copiedSnack(String value) => '$value copied to clipboard';
 String copiedErrorSnack(String value) => 'Copy to clipboard failed: $value';
 
+const String copyColorAction = 'Copy color code';
 const String shareTooltip = 'Share UUID';
 const String uniquenessSearchAction = 'Uniqueness search';
 const String settingsAction = 'Settings';
@@ -39,3 +40,11 @@ const Map<UuidFormat, String> uuidFormatTabs = <UuidFormat, String>{
 };
 
 const String shareSubject = 'UUID from TapGuid';
+
+// -----------------------------------------------------------------------------
+// Settings Screen
+// -----------------------------------------------------------------------------
+
+const String settingsScreenTitle = 'Settings';
+const String uppercaseDigitsSetting = 'Use uppercase letters in UUIDs';
+const String uuidColorSetting = 'Show UUIDs in color';

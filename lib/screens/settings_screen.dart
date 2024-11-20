@@ -5,7 +5,9 @@
 import 'package:flutter/material.dart';
 
 import '../common/app_preferences.dart' as prefs;
+import '../common/strings.dart' as strings;
 
+/// The settings screen of the app.
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -18,26 +20,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text(strings.settingsScreenTitle),
       ),
       body: ListView(
         children: <Widget>[
+          // The uppercase digits setting
           SwitchListTile(
-            title: const Text('Use uppercase letters in UUIDs'),
+            title: const Text(strings.uppercaseDigitsSetting),
             value: prefs.uppercaseDigits.value,
             onChanged: (bool value) {
-              setState(() {
-                prefs.uppercaseDigits.value = value;
-              });
+              setState(() => prefs.uppercaseDigits.value = value);
             },
           ),
+
+          // The UUID color setting
           SwitchListTile(
-            title: const Text('Show UUIDs in color'),
+            title: const Text(strings.uuidColorSetting),
             value: prefs.uuidColor.value,
             onChanged: (bool value) {
-              setState(() {
-                prefs.uuidColor.value = value;
-              });
+              setState(() => prefs.uuidColor.value = value);
             },
           ),
         ],

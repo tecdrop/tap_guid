@@ -38,6 +38,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   /// The value of the current UUID in the selected format.
   late String _uuidFormatValue;
 
+  /// The color of the current UUID.
+  late Color _uuidColor;
+
   /// The cached text style for the UUID display.
   late TextStyle _uuidTextStyle;
 
@@ -50,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   /// Generates a new UUID and updates the display.
   void _genNewUuid() {
     _uuidValue = _uuid.v4();
+    _uuidColor = getUuidColor(_uuidValue);
     _updateUuidFormat();
   }
 
@@ -115,6 +119,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         Share.share(_uuidFormatValue, subject: strings.shareSubject);
         break;
 
+      // Copy the color of the UUID to the clipboard
+      case _AppBarActions.copyColor:
+        utils.copyToClipboard(context, color_utils.toHexString(_uuidColor));
+        break;
+
       // Perform a web search for the Uuid value in the current format.
       case _AppBarActions.uniquenessSearch:
         utils.webSearch('"$_uuidFormatValue"');
@@ -146,8 +155,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final Color backColor = getUuidColor(_uuidValue);
-    final Color foreColor = color_utils.contrastColor(backColor);
+    final Color foreColor = color_utils.contrastColor(_uuidColor);
 
     final EdgeInsets padding = const EdgeInsets.all(16.0);
 
@@ -169,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           // Use an animated container to animate the background color change if color is enabled
           ? AnimatedContainer(
               duration: const Duration(milliseconds: 500),
-              color: backColor,
+              color: _uuidColor,
               width: double.infinity,
               height: double.infinity,
               padding: padding,
@@ -194,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 }
 
 /// The actions available in the app bar.
-enum _AppBarActions { copy, share, uniquenessSearch, settings, rate, help, goPro }
+enum _AppBarActions { copy, share, copyColor, uniquenessSearch, settings, rate, help, goPro }
 
 /// The app bar for the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -231,6 +239,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         PopupMenuButton<_AppBarActions>(
           onSelected: onAction,
           itemBuilder: (BuildContext context) => <PopupMenuEntry<_AppBarActions>>[
+            // The Copy color menu item
+            const PopupMenuItem<_AppBarActions>(
+              value: _AppBarActions.copyColor,
+              child: Text(strings.copyColorAction),
+            ),
+
             // The Uniqueness Search action button
             const PopupMenuItem<_AppBarActions>(
               value: _AppBarActions.uniquenessSearch,
@@ -239,19 +253,19 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
             const PopupMenuDivider(),
 
-            // The Settings action button
+            // The Settings menu item
             const PopupMenuItem<_AppBarActions>(
               value: _AppBarActions.settings,
               child: Text(strings.settingsAction),
             ),
 
-            // The Rate action button
+            // The Rate menu item
             const PopupMenuItem<_AppBarActions>(
               value: _AppBarActions.rate,
               child: Text(strings.rateAction),
             ),
 
-            // The Help action button
+            // The Help menu item
             const PopupMenuItem<_AppBarActions>(
               value: _AppBarActions.help,
               child: Text(strings.helpAction),
@@ -259,7 +273,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
             const PopupMenuDivider(),
 
-            // The Go Pro action button
+            // The Go Pro menu item
             const PopupMenuItem<_AppBarActions>(
               value: _AppBarActions.goPro,
               child: Text(strings.goProAction),

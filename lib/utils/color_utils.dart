@@ -13,3 +13,9 @@ Color contrastColor(Color color) {
       return Colors.white;
   }
 }
+
+/// Returns the hexadecimal string representation of the given [Color].
+String toHexString(Color color, {bool withHash = true}) {
+  final String hex = (color.value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase();
+  return withHash ? '#$hex' : hex;
+}
