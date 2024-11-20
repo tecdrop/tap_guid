@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../common/app_preferences.dart' as prefs;
+import '../common/preferences.dart' as prefs;
 import '../common/strings.dart' as strings;
 
 /// The settings screen of the app.

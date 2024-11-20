@@ -40,21 +40,6 @@ Future<void> launchUrlExternal(BuildContext context, String url) async {
   await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 }
 
-/// Performs a web search for the specified text.
-///
-/// This works only on Android platforms.
-Future<void> webSearch(String query) async {
-  // TODO: Implement the webSearch function in a cross-platform way.
-
-  // if (Platform.isAndroid) {
-  //   AndroidIntent intent = AndroidIntent(
-  //     action: 'android.intent.action.WEB_SEARCH',
-  //     arguments: {'query': query},
-  //   );
-  //   await intent.launch();
-  // }
-}
-
 /// Shows a [SnackBar] with the specified [text] across all registered [Scaffold]s.
 void showSnackBarForAsync(ScaffoldMessengerState messengerState, String text) {
   final SnackBar snackBar = SnackBar(content: Text(text));

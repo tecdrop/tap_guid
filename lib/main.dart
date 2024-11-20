@@ -3,19 +3,19 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:tap_guid/common/theme.dart';
 
 import 'common/strings.dart' as strings;
+import 'common/theme.dart';
 import 'screens/home_screen.dart';
 
 void main() {
   runApp(const TapGuidApp());
 }
 
+/// The main application widget, based on [MaterialApp].
 class TapGuidApp extends StatelessWidget {
   const TapGuidApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

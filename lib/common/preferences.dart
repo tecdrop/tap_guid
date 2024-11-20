@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:simple_app_preferences/simple_app_preferences.dart';
 
 /// Stores whether to use uppercase letters in generated UUIDs.

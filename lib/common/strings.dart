@@ -27,7 +27,7 @@ const String uniquenessSearchAction = 'Uniqueness search';
 const String settingsAction = 'Settings';
 const String rateAction = 'Rate app';
 const String helpAction = 'Help';
-const String goProAction = 'Go Pro';
+const String proAppsAction = 'Try our pro apps';
 
 const Map<UuidFormat, String> uuidFormatTabs = <UuidFormat, String>{
   UuidFormat.standard: 'Standard',

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
-import '../common/app_preferences.dart' as prefs;
-import '../common/app_urls.dart';
+import '../common/preferences.dart' as prefs;
 import '../common/strings.dart' as strings;
 import '../common/types.dart';
+import '../common/urls.dart' as urls;
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
@@ -126,12 +126,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
       // Perform a web search for the Uuid value in the current format.
       case _AppBarActions.uniquenessSearch:
-        utils.webSearch('"$_uuidFormatValue"');
+        utils.launchUrlExternal(context, urls.webSearch(_uuidFormatValue));
         break;
 
       // Open the Google Play app page to allow the user to rate the app.
       case _AppBarActions.rate:
-        utils.launchUrlExternal(context, AppUrls.rateActionUrl);
+        utils.launchUrlExternal(context, urls.rateApp);
         break;
 
       // Open the app settings screen and update the display when the user returns
@@ -142,13 +142,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         }();
         break;
 
-      // Open the app home page in the default browser.
+      // Open the app home page in the default browser
       case _AppBarActions.help:
-        utils.launchUrlExternal(context, AppUrls.helpActionUrl);
+        utils.launchUrlExternal(context, urls.help);
         break;
 
-      case _AppBarActions.goPro:
-        // TODO: Handle this case.
+      // Open the Pro Apps page in the default browser
+      case _AppBarActions.proApps:
+        utils.launchUrlExternal(context, urls.proApps);
         break;
     }
   }
@@ -202,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 }
 
 /// The actions available in the app bar.
-enum _AppBarActions { copy, share, copyColor, uniquenessSearch, settings, rate, help, goPro }
+enum _AppBarActions { copy, share, copyColor, uniquenessSearch, settings, rate, help, proApps }
 
 /// The app bar for the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -275,8 +276,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
             // The Go Pro menu item
             const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.goPro,
-              child: Text(strings.goProAction),
+              value: _AppBarActions.proApps,
+              child: Text(strings.proAppsAction),
             ),
           ],
         ),

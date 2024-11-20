@@ -1,7 +1,6 @@
-// Copyright 2020-2024 Tecdrop (https://www.tecdrop.com/)
+// Copyright 2014-2024 Tecdrop (https://www.tecdrop.com/)
 // Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://www.tecdrop.com/colorhap/license/.
+// license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
 
