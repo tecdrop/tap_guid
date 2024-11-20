@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -31,6 +30,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   late TabController _tabController;
 
+  late final TextStyle _uuidTextStyle;
+  late final double _uuidCharacterWidth;
+
   void _genNewUuid() {
     _uuidValue = _uuid.v4();
     _updateUuidFormat();
@@ -43,13 +45,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(vsync: this, length: strings.uuidFormatTabs.length);
     _tabController.addListener(() {
-      setState(() {
-        _updateUuidFormat();
-      });
+      // Update the UUID format display when the tab changes
+      setState(() => _updateUuidFormat());
     });
+
+    // Generate a new UUID when the screen is first displayed
     _genNewUuid();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Cache the text style and character width for the UUID display
+    _uuidTextStyle = Theme.of(context).textTheme.headlineLarge!;
+    _uuidCharacterWidth = UniformWrappableText.getWidestCharacterWidth(_uuidTextStyle);
   }
 
   @override
@@ -58,10 +71,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.dispose();
   }
 
+  /// Generate a new UUID and update the display when the FAB is pressed.
   void _onFabPressed() {
-    setState(() {
-      _genNewUuid();
-    });
+    setState(() => _genNewUuid());
   }
 
   /// Perform the actions of the app bar.
@@ -83,13 +95,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         launchUrlWrapper(context, AppUrls.rateActionUrl);
         break;
       case HomeAppBarActions.settings:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
+        break;
       // Open the app home page in the default browser.
       case HomeAppBarActions.help:
         launchUrlWrapper(context, AppUrls.helpActionUrl);
         break;
       case HomeAppBarActions.goPro:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
+        break;
     }
   }
 
@@ -99,66 +113,36 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final Color foreColor = color_utils.contrastColor(backColor);
 
     return Scaffold(
-      backgroundColor: backColor,
+      // The app bar with tabs and actions
       appBar: HomeAppBar(
         tabController: _tabController,
         onAction: _onAppBarAction,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: UniformWrappableText(
-            _uuidFormatValue,
-            // textAlign: TextAlign.center,
-            // softWrap: false,
-            // overflow: TextOverflow.fade,
 
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  color: foreColor,
-                  // fontFamily: 'monospace',
-                  // fontFeatures: [const FontFeature.tabularFigures()],
-                ),
-            // style: GoogleFonts.robotoMono(
-            //   // textStyle: Theme.of(context).textTheme.headlineMedium,
-            //   color: foreColor,
-            //   fontSize: 50.0,
+      // Use an animated container to animate the background color change
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        color: backColor,
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(16.0),
 
-            //   // letterSpacing: 10.0,
-
-            //   // fontFeatures: [const FontFeature.tabularFigures()],
-            // ),
-          ),
+        // Display the UUID in the selected format with uniform width characters
+        child: UniformWrappableText(
+          _uuidFormatValue,
+          style: _uuidTextStyle.copyWith(color: foreColor),
+          characterWidth: _uuidCharacterWidth,
         ),
       ),
-      // body: Expanded(
-      //   child: Text(
-      //     _uuidFormatValue,
-      //     // textAlign: TextAlign.center,
-      //     // softWrap: false,
-      //     // overflow: TextOverflow.fade,
 
-      //     // style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-      //     //       color: foreColor,
-      //     //       fontFamily: 'monospace',
-      //     //       // fontFeatures: [const FontFeature.tabularFigures()],
-      //     //     ),
-      //     style: GoogleFonts.robotoMono(
-      //       // textStyle: Theme.of(context).textTheme.headlineMedium,
-      //       color: foreColor,
-      //       fontSize: 50.0,
-
-      //       // letterSpacing: 10.0,
-
-      //       // fontFeatures: [const FontFeature.tabularFigures()],
-      //     ),
-      //   ),
-      // ),
+      // The refresh FAB that generates a new UUID
       floatingActionButton: FloatingActionButton.large(
         backgroundColor: foreColor,
         foregroundColor: color_utils.contrastColor(foreColor),
         tooltip: strings.newUuidTooltip,
         onPressed: _onFabPressed,
-        child: const Icon(Icons.shuffle),
+        child: const Icon(Icons.refresh),
       ),
     );
   }

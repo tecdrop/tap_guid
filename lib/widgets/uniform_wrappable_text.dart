@@ -25,7 +25,7 @@ class UniformWrappableText extends StatelessWidget {
   /// Returns the width of the widest character in the specified style.
   ///
   /// Uses the character 'W' to calculate the width, as it is usually the widest character.
-  double _getWidestCharacterWidth() {
+  static double getWidestCharacterWidth(TextStyle? style) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: 'W', style: style),
       textDirection: TextDirection.ltr,
@@ -42,7 +42,7 @@ class UniformWrappableText extends StatelessWidget {
           .split('')
           .map(
             (String char) => SizedBox(
-              width: characterWidth ?? _getWidestCharacterWidth(),
+              width: characterWidth ?? getWidestCharacterWidth(style),
               child: Text(
                 char,
                 textAlign: TextAlign.center,
