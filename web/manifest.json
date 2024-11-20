@@ -1,6 +1,6 @@
 {
-    "name": "tap_guid",
-    "short_name": "tap_guid",
+    "name": "TapGuid",
+    "short_name": "TapGuid",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
