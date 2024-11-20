@@ -13,9 +13,12 @@ import '../common/types.dart';
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart';
 import '../utils/uuid_utils.dart';
-import '../widgets/home_app_bar.dart';
 import '../widgets/uniform_wrappable_text.dart';
 
+/// The home screen of the app.
+///
+/// Generates and displays a UUID in various formats and allows the user to copy, share, and search
+/// for the UUID online.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -24,20 +27,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+  /// The UUID generator.
   final Uuid _uuid = const Uuid();
+
+  /// The value of the current UUID.
   late String _uuidValue;
+
+  /// The value of the current UUID in the selected format.
   late String _uuidFormatValue;
 
+  /// The cached text style for the UUID display.
+  late TextStyle _uuidTextStyle;
+
+  /// The cached character width for the UUID display.
+  late double _uuidCharacterWidth;
+
+  /// The tab controller for the UUID format tabs.
   late TabController _tabController;
 
-  late final TextStyle _uuidTextStyle;
-  late final double _uuidCharacterWidth;
-
+  /// Generates a new UUID and updates the display.
   void _genNewUuid() {
     _uuidValue = _uuid.v4();
     _updateUuidFormat();
   }
 
+  /// Updates the UUID format display based on the current tab.
   void _updateUuidFormat() {
     _uuidFormatValue = formatUuid(_uuidValue, UuidFormat.values[_tabController.index]);
   }
@@ -77,31 +91,31 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   /// Perform the actions of the app bar.
-  void _onAppBarAction(HomeAppBarActions action) {
+  void _onAppBarAction(_AppBarActions action) {
     switch (action) {
-      case HomeAppBarActions.copy:
+      case _AppBarActions.copy:
         Clipboard.setData(ClipboardData(text: _uuidFormatValue))
             .then((value) => showSnackBar(context, strings.copiedSnackBar));
         break;
-      case HomeAppBarActions.share:
+      case _AppBarActions.share:
         shareText(_uuidFormatValue, 'Share UUID');
         break;
       // Perform a web search for the Uuid value in the current format.
-      case HomeAppBarActions.uniquenessSearch:
+      case _AppBarActions.uniquenessSearch:
         webSearch('"$_uuidFormatValue"');
         break;
       // Open the Google Play app page to allow the user to rate the app.
-      case HomeAppBarActions.rate:
+      case _AppBarActions.rate:
         launchUrlWrapper(context, AppUrls.rateActionUrl);
         break;
-      case HomeAppBarActions.settings:
+      case _AppBarActions.settings:
         // TODO: Handle this case.
         break;
       // Open the app home page in the default browser.
-      case HomeAppBarActions.help:
+      case _AppBarActions.help:
         launchUrlWrapper(context, AppUrls.helpActionUrl);
         break;
-      case HomeAppBarActions.goPro:
+      case _AppBarActions.goPro:
         // TODO: Handle this case.
         break;
     }
@@ -114,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return Scaffold(
       // The app bar with tabs and actions
-      appBar: HomeAppBar(
+      appBar: _AppBar(
         tabController: _tabController,
         onAction: _onAppBarAction,
       ),
@@ -146,4 +160,93 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
     );
   }
+}
+
+/// The actions available in the app bar.
+enum _AppBarActions { copy, share, uniquenessSearch, settings, rate, help, goPro }
+
+/// The app bar for the home screen.
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar({
+    super.key, // ignore: unused_element
+    this.tabController,
+    required this.onAction,
+  });
+
+  /// The tab controller for the UUID format tabs.
+  final TabController? tabController;
+
+  /// The callback that is called when an app bar action is pressed.
+  final Function(_AppBarActions action) onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text(strings.homeScreenTitle),
+      actions: <Widget>[
+        // The copy action button
+        IconButton(
+          icon: const Icon(Icons.content_copy_rounded),
+          tooltip: strings.copyTooltip,
+          onPressed: () => onAction(_AppBarActions.copy),
+        ),
+        // The Share action button
+        IconButton(
+          icon: const Icon(Icons.share_rounded),
+          tooltip: strings.shareTooltip,
+          onPressed: () => onAction(_AppBarActions.share),
+        ),
+
+        PopupMenuButton<_AppBarActions>(
+          onSelected: onAction,
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<_AppBarActions>>[
+            // The Uniqueness Search action button
+            const PopupMenuItem<_AppBarActions>(
+              value: _AppBarActions.uniquenessSearch,
+              child: Text(strings.uniquenessSearchAction),
+            ),
+
+            const PopupMenuDivider(),
+
+            // The Settings action button
+            const PopupMenuItem<_AppBarActions>(
+              value: _AppBarActions.settings,
+              child: Text(strings.settingsAction),
+            ),
+
+            // The Rate action button
+            const PopupMenuItem<_AppBarActions>(
+              value: _AppBarActions.rate,
+              child: Text(strings.rateAction),
+            ),
+
+            // The Help action button
+            const PopupMenuItem<_AppBarActions>(
+              value: _AppBarActions.help,
+              child: Text(strings.helpAction),
+            ),
+
+            const PopupMenuDivider(),
+
+            // The Go Pro action button
+            const PopupMenuItem<_AppBarActions>(
+              value: _AppBarActions.goPro,
+              child: Text(strings.goProAction),
+            ),
+          ],
+        ),
+      ],
+      // The UUID format tabs
+      bottom: TabBar(
+        controller: tabController,
+        isScrollable: true,
+        tabs: strings.uuidFormatTabs.keys
+            .map((format) => Tab(text: strings.uuidFormatTabs[format]))
+            .toList(),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + kTextTabBarHeight);
 }

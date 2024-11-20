@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:tap_guid/common/theme.dart';
 
 import 'common/strings.dart' as strings;
 import 'screens/home_screen.dart';
@@ -20,9 +21,8 @@ class TapGuidApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: strings.appName,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: getAppTheme(Brightness.light),
+      darkTheme: getAppTheme(Brightness.dark),
       home: const HomeScreen(),
     );
   }

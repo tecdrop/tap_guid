@@ -14,11 +14,11 @@ const String appName = 'TapGuid';
 // Home Screen
 // -----------------------------------------------------------------------------------------------
 
-const String homeScreenTitle = 'Generate UUIDs';
+const String homeScreenTitle = 'TapGuid';
 const String newUuidTooltip = 'Generate a new UUID';
 const String copyTooltip = 'Copy UUID to clipboard';
 const String copiedSnackBar = 'UUID copied to clipboard.';
-const String shareAction = 'Share...';
+const String shareTooltip = 'Share UUID';
 const String uniquenessSearchAction = 'Uniqueness search';
 const String settingsAction = 'Settings';
 const String rateAction = 'Rate app';
