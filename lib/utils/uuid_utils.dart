@@ -31,21 +31,14 @@ String formatUuid(
       : formattedUuid;
 }
 
-/// Calculates a fast hash of a string using the FNV-1a algorithm with a 64-bit prime.
-int _fastHash(String string) {
-  var hash = 0xcbf29ce484222325;
-
-  var i = 0;
-  while (i < string.length) {
-    final codeUnit = string.codeUnitAt(i++);
-    hash ^= codeUnit >> 8;
-    hash *= 0x100000001b3;
-    hash ^= codeUnit & 0xFF;
-    hash *= 0x100000001b3;
+/// 32-bit FNV-1a hash function.
+int _fnvHash32(String input) {
+  int hash = 0x811c9dc5;
+  for (final int byte in utf8.encode(input)) {
+    hash = ((hash ^ byte) * 0x1000193) & 0xFFFFFFFF;
   }
-
   return hash;
 }
 
 /// Creates a [Color] from a standard UUID string using a fast hash function.
-Color getUuidColor(String uuid) => Color(_fastHash(uuid) | 0xFF000000);
+Color getUuidColor(String uuid) => Color(_fnvHash32(uuid) | 0xFF000000);

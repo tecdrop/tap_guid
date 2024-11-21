@@ -56,4 +56,4 @@ const Map<UuidVersion, String> uuidVersionNames = <UuidVersion, String>{
   UuidVersion.v8: 'v8',
 };
 const String uppercaseDigitsSetting = 'Use uppercase letters in UUIDs';
-const String uuidColorSetting = 'Show UUIDs in color';
+const String uuidColorSetting = 'Computed colors for each UUID';
