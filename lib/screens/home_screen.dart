@@ -156,14 +156,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final Color foreColor = color_utils.contrastColor(_uuidColor);
+    final Color backColor =
+        prefs.uuidColor.value ? _uuidColor : Theme.of(context).colorScheme.tertiary;
+    final Color foreColor = color_utils.contrastColor(backColor);
 
     final EdgeInsets padding = const EdgeInsets.all(16.0);
 
     // The UUID display with uniform width characters
     final Widget uuidText = UniformWrappableText(
       _uuidFormatValue,
-      style: _uuidTextStyle.copyWith(color: prefs.uuidColor.value ? foreColor : null),
+      style: _uuidTextStyle.copyWith(color: foreColor),
       characterWidth: _uuidCharacterWidth,
     );
 
@@ -175,25 +177,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
 
       body: prefs.uuidColor.value
-          // Use an animated container to animate the background color change if color is enabled
+          // Use an animated container to animate background color changes if UUID color is enabled
           ? AnimatedContainer(
               duration: const Duration(milliseconds: 500),
-              color: _uuidColor,
+              color: backColor,
               width: double.infinity,
               height: double.infinity,
               padding: padding,
               alignment: Alignment.center,
               child: uuidText,
             )
-          : Padding(
+          : Container(
+              color: backColor,
               padding: padding,
               child: Center(child: uuidText),
             ),
 
       // The refresh FAB that generates a new UUID
       floatingActionButton: FloatingActionButton.large(
-        backgroundColor: prefs.uuidColor.value ? foreColor : null,
-        foregroundColor: prefs.uuidColor.value ? color_utils.contrastColor(foreColor) : null,
+        backgroundColor: foreColor,
+        foregroundColor: color_utils.contrastColor(foreColor),
         tooltip: strings.newUuidTooltip,
         onPressed: _onFabPressed,
         child: const Icon(Icons.refresh),
