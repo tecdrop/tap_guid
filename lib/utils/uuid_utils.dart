@@ -31,10 +31,21 @@ String formatUuid(
       : formattedUuid;
 }
 
-/// Creates a [Color] from a standard UUID string.
-///
-/// The color is based on the first 6 characters of the UUID.
-Color getUuidColor(String uuid) {
-  int hash = int.parse(uuid.substring(0, 6), radix: 16);
-  return Color(hash & 0xFFFFFF | 0xFF000000);
+/// Calculates a fast hash of a string using the FNV-1a algorithm with a 64-bit prime.
+int _fastHash(String string) {
+  var hash = 0xcbf29ce484222325;
+
+  var i = 0;
+  while (i < string.length) {
+    final codeUnit = string.codeUnitAt(i++);
+    hash ^= codeUnit >> 8;
+    hash *= 0x100000001b3;
+    hash ^= codeUnit & 0xFF;
+    hash *= 0x100000001b3;
+  }
+
+  return hash;
 }
+
+/// Creates a [Color] from a standard UUID string using a fast hash function.
+Color getUuidColor(String uuid) => Color(_fastHash(uuid) | 0xFF000000);
