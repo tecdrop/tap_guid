@@ -97,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.didChangeDependencies();
 
     // Cache the text style and character width for the UUID display
-    _uuidTextStyle = Theme.of(context).textTheme.headlineLarge!;
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+    _uuidTextStyle = isLargeScreen
+        ? Theme.of(context).textTheme.displaySmall!
+        : Theme.of(context).textTheme.headlineLarge!;
     _uuidCharacterWidth = UniformWrappableText.getWidestCharacterWidth(_uuidTextStyle);
   }
 
@@ -166,11 +169,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+    final EdgeInsets padding = EdgeInsets.symmetric(horizontal: isLargeScreen ? 64.0 : 16.0);
+
     final Color backColor =
         prefs.uuidColor.value ? _uuidColor : Theme.of(context).colorScheme.tertiary;
     final Color foreColor = color_utils.contrastColor(backColor);
-
-    final EdgeInsets padding = const EdgeInsets.all(16.0);
 
     // The UUID display with uniform width characters
     final Widget uuidText = UniformWrappableText(
@@ -200,7 +204,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           : Container(
               color: backColor,
               padding: padding,
-              child: Center(child: uuidText),
+              alignment: Alignment.center,
+              child: uuidText,
             ),
 
       // The refresh FAB that generates a new UUID
@@ -234,8 +239,11 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
     return AppBar(
-      title: const Text(strings.homeScreenTitle),
+      title: isLargeScreen
+          ? const Text(strings.homeScreenTitle)
+          : const Text(strings.homeScreenTitleShort),
       actions: <Widget>[
         // The copy action button
         IconButton(

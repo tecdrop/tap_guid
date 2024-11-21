@@ -19,51 +19,66 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600.0;
+
+    final Widget vSpacer =
+        isLargeScreen ? const SizedBox(height: 16.0) : const SizedBox(height: 8.0);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(strings.settingsScreenTitle),
       ),
-      body: ListView(
-        children: <Widget>[
-          // The UUID version setting
-          ListTile(
-            title: Text(strings.uuidVersionSetting),
-            subtitle: Wrap(
-              spacing: 6.0,
-              children: UuidVersion.values.map((UuidVersion version) {
-                return ChoiceChip(
-                  label: Text(strings.uuidVersionNames[version]!),
-                  selected: prefs.uuidVersion.value == version,
-                  onSelected: (bool selected) {
-                    if (selected) {
-                      setState(() => prefs.uuidVersion.value = version);
-                    }
-                  },
-                );
-              }).toList(),
-            ),
-          ),
+      body: Center(
+        // Limit the width of the settings content for better readability on large screens
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800.0),
+          child: ListView(
+            children: <Widget>[
+              vSpacer,
 
-          const SizedBox(height: 8.0),
+              // The UUID version setting
+              ListTile(
+                title: Text(strings.uuidVersionSetting),
+                subtitle: Wrap(
+                  spacing: isLargeScreen ? 16.0 : 8.0,
+                  children: UuidVersion.values.map((UuidVersion version) {
+                    return ChoiceChip(
+                      label: Text(strings.uuidVersionNames[version]!),
+                      selected: prefs.uuidVersion.value == version,
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          setState(() => prefs.uuidVersion.value = version);
+                        }
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
 
-          // The uppercase digits setting
-          SwitchListTile(
-            title: const Text(strings.uppercaseDigitsSetting),
-            value: prefs.uppercaseDigits.value,
-            onChanged: (bool value) {
-              setState(() => prefs.uppercaseDigits.value = value);
-            },
-          ),
+              vSpacer,
 
-          // The UUID color setting
-          SwitchListTile(
-            title: const Text(strings.uuidColorSetting),
-            value: prefs.uuidColor.value,
-            onChanged: (bool value) {
-              setState(() => prefs.uuidColor.value = value);
-            },
+              // The uppercase digits setting
+              SwitchListTile(
+                title: const Text(strings.uppercaseDigitsSetting),
+                value: prefs.uppercaseDigits.value,
+                onChanged: (bool value) {
+                  setState(() => prefs.uppercaseDigits.value = value);
+                },
+              ),
+
+              vSpacer,
+
+              // The UUID color setting
+              SwitchListTile(
+                title: const Text(strings.uuidColorSetting),
+                value: prefs.uuidColor.value,
+                onChanged: (bool value) {
+                  setState(() => prefs.uuidColor.value = value);
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

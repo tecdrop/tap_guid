@@ -14,7 +14,8 @@ const String appName = 'TapGuid';
 // Home Screen
 // -----------------------------------------------------------------------------
 
-const String homeScreenTitle = 'TapGuid';
+const String homeScreenTitleShort = 'TapGuid';
+const String homeScreenTitle = 'TapGuid - UUID Generator';
 const String newUuidTooltip = 'Generate a new UUID';
 
 const String copyTooltip = 'Copy UUID to clipboard';
