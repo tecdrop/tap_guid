@@ -5,6 +5,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:simple_app_preferences/simple_app_preferences.dart';
+import 'package:tap_guid/common/types.dart';
+
+/// Stores the UUID version to use when generating UUIDs.
+///
+/// Added in version 4.0.0.
+AppPreferenceEx<UuidVersion, int> uuidVersion = AppPreferenceEx<UuidVersion, int>(
+  defaultValue: UuidVersion.v4,
+  key: 'uuidVersion',
+  valueLoader: (int value) => UuidVersion.values[value],
+  valueSaver: (UuidVersion version) => version.index,
+);
 
 /// Stores whether to use uppercase letters in generated UUIDs.
 ///

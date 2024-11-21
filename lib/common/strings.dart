@@ -46,5 +46,14 @@ const String shareSubject = 'UUID from TapGuid';
 // -----------------------------------------------------------------------------
 
 const String settingsScreenTitle = 'Settings';
+
+const String uuidVersionSetting = 'UUID version';
+const Map<UuidVersion, String> uuidVersionNames = <UuidVersion, String>{
+  UuidVersion.v1: 'v1',
+  UuidVersion.v4: 'v4',
+  UuidVersion.v6: 'v6',
+  UuidVersion.v7: 'v7',
+  UuidVersion.v8: 'v8',
+};
 const String uppercaseDigitsSetting = 'Use uppercase letters in UUIDs';
 const String uuidColorSetting = 'Show UUIDs in color';

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../common/preferences.dart' as prefs;
 import '../common/strings.dart' as strings;
+import '../common/types.dart';
 
 /// The settings screen of the app.
 class SettingsScreen extends StatefulWidget {
@@ -24,6 +25,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: <Widget>[
+          // The UUID version setting
+          ListTile(
+            title: Text(strings.uuidVersionSetting),
+            subtitle: Wrap(
+              spacing: 6.0,
+              children: UuidVersion.values.map((UuidVersion version) {
+                return ChoiceChip(
+                  label: Text(strings.uuidVersionNames[version]!),
+                  selected: prefs.uuidVersion.value == version,
+                  onSelected: (bool selected) {
+                    if (selected) {
+                      setState(() => prefs.uuidVersion.value = version);
+                    }
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+
+          const SizedBox(height: 8.0),
+
           // The uppercase digits setting
           SwitchListTile(
             title: const Text(strings.uppercaseDigitsSetting),

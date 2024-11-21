@@ -52,7 +52,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   /// Generates a new UUID and updates the display.
   void _genNewUuid() {
-    _uuidValue = _uuid.v4();
+    _uuidValue = switch (prefs.uuidVersion.value) {
+      UuidVersion.v1 => _uuid.v1(),
+      UuidVersion.v4 => _uuid.v4(),
+      UuidVersion.v6 => _uuid.v6(),
+      UuidVersion.v7 => _uuid.v7(),
+      UuidVersion.v8 => _uuid.v8(),
+    };
     _uuidColor = getUuidColor(_uuidValue);
     _updateUuidFormat();
   }
@@ -137,8 +143,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       // Open the app settings screen and update the display when the user returns
       case _AppBarActions.settings:
         () async {
+          final UuidVersion oldVersion = prefs.uuidVersion.value;
           await utils.navigateTo(context: context, screen: const SettingsScreen());
-          setState(() => _updateUuidFormat());
+          setState(
+            // Generate a new UUID if the UUID version has changed, or just update the format
+            () => prefs.uuidVersion.value != oldVersion ? _genNewUuid() : _updateUuidFormat(),
+          );
         }();
         break;
 

@@ -4,45 +4,36 @@
 
 import 'package:flutter/material.dart';
 
+// import '../utils/color_utils.dart' as color_utils;
+
 /// Returns the light or dark theme for the app.
 ThemeData getAppTheme(Brightness brightness) {
-  // final Color backgroundColor = brightness == Brightness.dark ? Colors.black : Colors.white;
-  final Color foregroundColor = brightness == Brightness.dark ? Colors.white : Colors.black;
+  final Color accentColor = brightness == Brightness.dark ? Colors.white : Colors.black;
+  final Color accentContrastColor = brightness == Brightness.dark ? Colors.black : Colors.white;
 
   final ColorScheme colorScheme =
       brightness == Brightness.dark ? const ColorScheme.dark() : const ColorScheme.light();
 
   return ThemeData(
-    // brightness: brightness,
     useMaterial3: true,
-    // scaffoldBackgroundColor: backgroundColor,
-    // colorSchemeSeed: appColor,
-    // colorSchemeSeed: Colors.white,
     colorScheme: colorScheme.copyWith(
-      primary: foregroundColor,
+      primary: accentColor,
       tertiary: brightness == Brightness.dark ? Color(0xFF4D4D4D) : Color(0xFFBFBFBF),
-      primaryContainer: foregroundColor,
-      // primaryContainer: Colors.black,
+      primaryContainer: accentColor,
     ),
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: backgroundColor,
-    //   foregroundColor: foregroundColor,
-    // ),
     tabBarTheme: TabBarTheme(
-      unselectedLabelColor: foregroundColor.withOpacity(0.5),
-      labelColor: foregroundColor,
-      indicatorColor: foregroundColor,
+      unselectedLabelColor: accentColor.withOpacity(0.5),
+      labelColor: accentColor,
+      indicatorColor: accentColor,
     ),
     dividerTheme: DividerThemeData(
-      color: foregroundColor.withOpacity(0.125),
+      color: accentColor.withOpacity(0.125),
     ),
-    // popupMenuTheme: PopupMenuThemeData(
-    //   color: backgroundColor,
-    //   // textStyle: TextStyle(color: foregroundColor),
-    // ),
-    // floatingActionButtonTheme: FloatingActionButtonThemeData(
-    //   backgroundColor: Colors.black,
-    //   foregroundColor: Colors.white,
-    // ),
+    chipTheme: ChipThemeData(
+      showCheckmark: false,
+      color: WidgetStateProperty.resolveWith((Set<WidgetState> states) =>
+          states.contains(WidgetState.selected) ? accentColor : accentContrastColor),
+      secondaryLabelStyle: TextStyle(color: accentContrastColor),
+    ),
   );
 }
