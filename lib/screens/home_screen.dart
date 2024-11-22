@@ -193,7 +193,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       body: prefs.uuidColor.value
           // Use an animated container to animate background color changes if UUID color is enabled
           ? AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
+              // Use an almost unnoticeable duration for a subtle color change effect
+              duration: const Duration(milliseconds: 100),
               color: backColor,
               width: double.infinity,
               height: double.infinity,
