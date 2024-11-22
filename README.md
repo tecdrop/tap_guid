@@ -40,7 +40,7 @@ flutter run
 
 ## Contribute
 
-TapGuid is an open-source project and welcomes contributions from the community! Whether you're a seasoned developer or just starting out, there are many ways you can get involved:
+TapGuid is open source, and we'd love your help to make it even better! Even though it's a simple app, there's always room for improvement.  No matter your skill level, you can contribute!
 
 **Ways to Contribute:**
 
@@ -49,6 +49,7 @@ TapGuid is an open-source project and welcomes contributions from the community!
 * **Improve documentation:**  Help make the documentation clearer and more comprehensive by submitting pull requests with improvements to the README or other documentation files.
 * **Fix bugs and implement features:** Contribute code by fixing existing bugs or implementing new features. Before starting any major work, it's a good idea to discuss your plans by opening an issue.
 * **Translate the app:** Help make TapGuid accessible to more users by translating it into different languages.
+* **Design a new app icon:**  Got some design skills?  We could use a fresh new look for the [app icon](https://github.com/tecdrop/tap_guid/blob/main/web/icons/Icon-512.png)!
 
 **Code Style:**
 
@@ -58,7 +59,7 @@ TapGuid is an open-source project and welcomes contributions from the community!
 
 **Submitting Pull Requests:**
 
-* Fork the repository and create a new branch for your changes.
+* [Fork the repository](https://github.com/tecdrop/tap_guid/fork) and create a new branch for your changes.
 * Commit your changes with descriptive commit messages.
 * Push your branch to your forked repository.
 * Open a pull request on the main repository, clearly explaining your changes.
