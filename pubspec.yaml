@@ -1,5 +1,5 @@
 name: tap_guid
-description: "An easy way to create, copy and share UUIDs/GUIDs on your device."
+description: "Generate, copy, and share UUIDs (GUIDs) with ease! TapGuid offers the most popular formats (standard, braces, URN, Base64, etc.), unique colors for each ID, works offline, and more."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

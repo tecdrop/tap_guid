@@ -1,4 +1,4 @@
-# tap_guid
+# TapGuid - UUID Generator
 
 A new Flutter project.
 
