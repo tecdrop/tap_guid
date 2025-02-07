@@ -9,7 +9,7 @@ TapGuid is open source, and we'd love your help to make it even better! Even tho
 * **Improve documentation:**  Help make the documentation clearer and more comprehensive by submitting pull requests with improvements to the README or other documentation files.
 * **Fix bugs and implement features:** Contribute code by fixing existing bugs or implementing new features. Before starting any major work, it's a good idea to discuss your plans by opening an issue.
 * **Translate the app:** Help make TapGuid accessible to more users by translating it into different languages.
-* **Design a new app icon:**  Got some design skills?  We could use a fresh new look for the [app icon](https://github.com/tecdrop/tap_guid/blob/main/web/icons/Icon-512.png)!
+* **Design a new app icon:**  Got some design skills?  We could use a fresh new look for the [app icon](https://github.com/tecdrop/tap_guid/blob/main/web/icons/icon-512.png)!
 
 **Code Style:**
 
