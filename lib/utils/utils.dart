@@ -1,4 +1,4 @@
-// Copyright 2014-2024 Tecdrop (https://www.tecdrop.com/)
+// Copyright 2014-2025 Tecdrop (https://www.tecdrop.com/)
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
 
