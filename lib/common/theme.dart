@@ -22,12 +22,12 @@ ThemeData getAppTheme(Brightness brightness) {
       primaryContainer: accentColor,
     ),
     tabBarTheme: TabBarTheme(
-      unselectedLabelColor: accentColor.withOpacity(0.5),
+      unselectedLabelColor: accentColor.withValues(alpha: 0.5),
       labelColor: accentColor,
       indicatorColor: accentColor,
     ),
     dividerTheme: DividerThemeData(
-      color: accentColor.withOpacity(0.125),
+      color: accentColor.withValues(alpha: 0.125),
     ),
     chipTheme: ChipThemeData(
       showCheckmark: false,

@@ -16,6 +16,8 @@ Color contrastColor(Color color) {
 
 /// Returns the hexadecimal string representation of the given [Color].
 String toHexString(Color color, {bool withHash = true}) {
-  final String hex = (color.value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase();
+  // Converts a normalized color channel (0.0 to 1.0) to a two-digit hex string.
+  String cToHex(double c) => ((c * 255.0).round() & 0xff).toRadixString(16).padLeft(2, '0');
+  final String hex = '${cToHex(color.r)}${cToHex(color.g)}${cToHex(color.b)}'.toUpperCase();
   return withHash ? '#$hex' : hex;
 }
