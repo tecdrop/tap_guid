@@ -26,8 +26,9 @@ const String copyColorAction = 'Copy color code';
 const String shareTooltip = 'Share UUID';
 const String uniquenessSearchAction = 'Uniqueness search';
 const String settingsAction = 'Settings';
+const String helpAction = 'Help & support';
+const String openSourceAction = 'Star on GitHub';
 const String rateAction = 'Rate app';
-const String helpAction = 'Help';
 const String proAppsAction = 'Try our Pro apps';
 
 const Map<UuidFormat, String> uuidFormatTabs = <UuidFormat, String>{

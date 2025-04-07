@@ -139,11 +139,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         utils.launchUrlExternal(context, urls.webSearch(_uuidFormatValue));
         break;
 
-      // Open the Google Play app page to allow the user to rate the app.
-      case _AppBarActions.rate:
-        utils.launchUrlExternal(context, urls.rateApp);
-        break;
-
       // Open the app settings screen and update the display when the user returns
       case _AppBarActions.settings:
         () async {
@@ -159,6 +154,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       // Open the app home page in the default browser
       case _AppBarActions.help:
         utils.launchUrlExternal(context, urls.help);
+        break;
+
+      // Open the open source repository in the default browser
+      case _AppBarActions.openSource:
+        utils.launchUrlExternal(context, urls.openSource);
+        break;
+
+      // Open the Google Play app page to allow the user to rate the app.
+      case _AppBarActions.rate:
+        utils.launchUrlExternal(context, urls.rateApp);
         break;
 
       // Open the Pro Apps page in the default browser
@@ -221,7 +226,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 }
 
 /// The actions available in the app bar.
-enum _AppBarActions { copy, share, copyColor, uniquenessSearch, settings, rate, help, proApps }
+enum _AppBarActions {
+  copy,
+  share,
+  copyColor,
+  uniquenessSearch,
+  settings,
+  help,
+  openSource,
+  rate,
+  proApps,
+}
 
 /// The app bar for the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -275,24 +290,30 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Text(strings.uniquenessSearchAction),
                 ),
 
-                const PopupMenuDivider(),
-
                 // The Settings menu item
                 const PopupMenuItem<_AppBarActions>(
                   value: _AppBarActions.settings,
                   child: Text(strings.settingsAction),
                 ),
 
-                // The Rate menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.rate,
-                  child: Text(strings.rateAction),
-                ),
+                const PopupMenuDivider(),
 
                 // The Help menu item
                 const PopupMenuItem<_AppBarActions>(
                   value: _AppBarActions.help,
                   child: Text(strings.helpAction),
+                ),
+
+                // The Open Source menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.openSource,
+                  child: Text(strings.openSourceAction),
+                ),
+
+                // The Rate menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.rate,
+                  child: Text(strings.rateAction),
                 ),
 
                 const PopupMenuDivider(),
