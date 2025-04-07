@@ -1,6 +1,6 @@
-// Copyright 2014-2025 Tecdrop (https://www.tecdrop.com/)
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file.
+// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Use of this source code is governed by an MIT-style license that can be found
+// in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'package:flutter/material.dart';
 
@@ -25,9 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         isLargeScreen ? const SizedBox(height: 16.0) : const SizedBox(height: 8.0);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(strings.settingsScreenTitle),
-      ),
+      appBar: AppBar(title: const Text(strings.settingsScreenTitle)),
       body: Center(
         // Limit the width of the settings content for better readability on large screens
         child: ConstrainedBox(
@@ -41,17 +39,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: Text(strings.uuidVersionSetting),
                 subtitle: Wrap(
                   spacing: isLargeScreen ? 16.0 : 8.0,
-                  children: UuidVersion.values.map((UuidVersion version) {
-                    return ChoiceChip(
-                      label: Text(strings.uuidVersionNames[version]!),
-                      selected: prefs.uuidVersion.value == version,
-                      onSelected: (bool selected) {
-                        if (selected) {
-                          setState(() => prefs.uuidVersion.value = version);
-                        }
-                      },
-                    );
-                  }).toList(),
+                  children:
+                      UuidVersion.values.map((UuidVersion version) {
+                        return ChoiceChip(
+                          label: Text(strings.uuidVersionNames[version]!),
+                          selected: prefs.uuidVersion.value == version,
+                          onSelected: (bool selected) {
+                            if (selected) {
+                              setState(() => prefs.uuidVersion.value = version);
+                            }
+                          },
+                        );
+                      }).toList(),
                 ),
               ),
 

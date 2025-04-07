@@ -1,6 +1,6 @@
-// Copyright 2014-2025 Tecdrop (https://www.tecdrop.com/)
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file.
+// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Use of this source code is governed by an MIT-style license that can be found
+// in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,10 +28,7 @@ AppPreference<bool> uppercaseDigits = AppPreference<bool>(
 /// Stores whether showing UUIDs in color is enabled.
 ///
 /// Added in version 4.0.0.
-AppPreference<bool> uuidColor = AppPreference<bool>(
-  defaultValue: true,
-  key: 'uuidColor',
-);
+AppPreference<bool> uuidColor = AppPreference<bool>(defaultValue: true, key: 'uuidColor');
 
 /// Loads app settings from persistent storage.
 Future<void> load() async {

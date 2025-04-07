@@ -1,6 +1,6 @@
-// Copyright 2014-2025 Tecdrop (https://www.tecdrop.com/)
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file.
+// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Use of this source code is governed by an MIT-style license that can be found
+// in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,10 +20,7 @@ Future<T?> navigateTo<T>({
 
   navigator ??= Navigator.of(context!);
   return await navigator.push(
-    MaterialPageRoute<T>(
-      settings: settings,
-      builder: (context) => screen,
-    ),
+    MaterialPageRoute<T>(settings: settings, builder: (context) => screen),
   );
 }
 

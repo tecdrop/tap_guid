@@ -1,6 +1,6 @@
-// Copyright 2014-2025 Tecdrop (https://www.tecdrop.com/)
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file.
+// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Use of this source code is governed by an MIT-style license that can be found
+// in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'package:flutter/material.dart';
 
@@ -26,13 +26,13 @@ ThemeData getAppTheme(Brightness brightness) {
       labelColor: accentColor,
       indicatorColor: accentColor,
     ),
-    dividerTheme: DividerThemeData(
-      color: accentColor.withValues(alpha: 0.125),
-    ),
+    dividerTheme: DividerThemeData(color: accentColor.withValues(alpha: 0.125)),
     chipTheme: ChipThemeData(
       showCheckmark: false,
-      color: WidgetStateProperty.resolveWith((Set<WidgetState> states) =>
-          states.contains(WidgetState.selected) ? accentColor : accentContrastColor),
+      color: WidgetStateProperty.resolveWith(
+        (Set<WidgetState> states) =>
+            states.contains(WidgetState.selected) ? accentColor : accentContrastColor,
+      ),
       secondaryLabelStyle: TextStyle(color: accentContrastColor),
     ),
   );

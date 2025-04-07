@@ -1,6 +1,6 @@
-// Copyright 2014-2025 Tecdrop (https://www.tecdrop.com/)
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file.
+// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Use of this source code is governed by an MIT-style license that can be found
+// in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'dart:convert';
 
@@ -10,11 +10,7 @@ import 'package:uuid/uuid.dart';
 import '../common/types.dart';
 
 /// Formats a UUID string according to the specified format.
-String formatUuid(
-  String uuid, {
-  UuidFormat format = UuidFormat.standard,
-  bool uppercase = false,
-}) {
+String formatUuid(String uuid, {UuidFormat format = UuidFormat.standard, bool uppercase = false}) {
   final String formattedUuid = switch (format) {
     UuidFormat.standard => uuid,
     UuidFormat.digits => uuid.replaceAll(RegExp(r'-'), ''),
