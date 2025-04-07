@@ -98,9 +98,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     // Cache the text style and character width for the UUID display
     final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
-    _uuidTextStyle = isLargeScreen
-        ? Theme.of(context).textTheme.displaySmall!
-        : Theme.of(context).textTheme.headlineLarge!;
+    _uuidTextStyle =
+        isLargeScreen
+            ? Theme.of(context).textTheme.displaySmall!
+            : Theme.of(context).textTheme.headlineLarge!;
     _uuidCharacterWidth = UniformWrappableText.getWidestCharacterWidth(_uuidTextStyle);
   }
 
@@ -185,29 +186,27 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return Scaffold(
       // The app bar with tabs and actions
-      appBar: _AppBar(
-        tabController: _tabController,
-        onAction: _onAppBarAction,
-      ),
+      appBar: _AppBar(tabController: _tabController, onAction: _onAppBarAction),
 
-      body: prefs.uuidColor.value
-          // Use an animated container to animate background color changes if UUID color is enabled
-          ? AnimatedContainer(
-              // Use an almost unnoticeable duration for a subtle color change effect
-              duration: const Duration(milliseconds: 100),
-              color: backColor,
-              width: double.infinity,
-              height: double.infinity,
-              padding: padding,
-              alignment: Alignment.center,
-              child: uuidText,
-            )
-          : Container(
-              color: backColor,
-              padding: padding,
-              alignment: Alignment.center,
-              child: uuidText,
-            ),
+      body:
+          prefs.uuidColor.value
+              // Use an animated container to animate background color changes if UUID color is enabled
+              ? AnimatedContainer(
+                // Use an almost unnoticeable duration for a subtle color change effect
+                duration: const Duration(milliseconds: 100),
+                color: backColor,
+                width: double.infinity,
+                height: double.infinity,
+                padding: padding,
+                alignment: Alignment.center,
+                child: uuidText,
+              )
+              : Container(
+                color: backColor,
+                padding: padding,
+                alignment: Alignment.center,
+                child: uuidText,
+              ),
 
       // The refresh FAB that generates a new UUID
       floatingActionButton: FloatingActionButton.large(
@@ -227,7 +226,7 @@ enum _AppBarActions { copy, share, copyColor, uniquenessSearch, settings, rate, 
 /// The app bar for the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
-    super.key, // ignore: unused_element
+    super.key, // ignore: unused_element_parameter
     this.tabController,
     required this.onAction,
   });
@@ -242,9 +241,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
     return AppBar(
-      title: isLargeScreen
-          ? const Text(strings.homeScreenTitle)
-          : const Text(strings.homeScreenTitleShort),
+      title:
+          isLargeScreen
+              ? const Text(strings.homeScreenTitle)
+              : const Text(strings.homeScreenTitleShort),
       actions: <Widget>[
         // The copy action button
         IconButton(
@@ -261,56 +261,58 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
         PopupMenuButton<_AppBarActions>(
           onSelected: onAction,
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<_AppBarActions>>[
-            // The Copy color menu item
-            const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.copyColor,
-              child: Text(strings.copyColorAction),
-            ),
+          itemBuilder:
+              (BuildContext context) => <PopupMenuEntry<_AppBarActions>>[
+                // The Copy color menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.copyColor,
+                  child: Text(strings.copyColorAction),
+                ),
 
-            // The Uniqueness Search action button
-            const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.uniquenessSearch,
-              child: Text(strings.uniquenessSearchAction),
-            ),
+                // The Uniqueness Search action button
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.uniquenessSearch,
+                  child: Text(strings.uniquenessSearchAction),
+                ),
 
-            const PopupMenuDivider(),
+                const PopupMenuDivider(),
 
-            // The Settings menu item
-            const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.settings,
-              child: Text(strings.settingsAction),
-            ),
+                // The Settings menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.settings,
+                  child: Text(strings.settingsAction),
+                ),
 
-            // The Rate menu item
-            const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.rate,
-              child: Text(strings.rateAction),
-            ),
+                // The Rate menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.rate,
+                  child: Text(strings.rateAction),
+                ),
 
-            // The Help menu item
-            const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.help,
-              child: Text(strings.helpAction),
-            ),
+                // The Help menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.help,
+                  child: Text(strings.helpAction),
+                ),
 
-            const PopupMenuDivider(),
+                const PopupMenuDivider(),
 
-            // The Go Pro menu item
-            const PopupMenuItem<_AppBarActions>(
-              value: _AppBarActions.proApps,
-              child: Text(strings.proAppsAction),
-            ),
-          ],
+                // The Go Pro menu item
+                const PopupMenuItem<_AppBarActions>(
+                  value: _AppBarActions.proApps,
+                  child: Text(strings.proAppsAction),
+                ),
+              ],
         ),
       ],
       // The UUID format tabs
       bottom: TabBar(
         controller: tabController,
         isScrollable: true,
-        tabs: strings.uuidFormatTabs.keys
-            .map((format) => Tab(text: strings.uuidFormatTabs[format]))
-            .toList(),
+        tabs:
+            strings.uuidFormatTabs.keys
+                .map((format) => Tab(text: strings.uuidFormatTabs[format]))
+                .toList(),
       ),
     );
   }

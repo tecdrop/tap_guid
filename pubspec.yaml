@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 4.0.0+5
 
 environment:
-  sdk: ^3.6.2
+  sdk: ^3.7.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -33,7 +33,7 @@ dependencies:
 
   simple_app_preferences: ^0.0.3
 
-  shared_preferences: ^2.5.1
+  shared_preferences: ^2.5.3
   uuid: ^4.5.1
   url_launcher: ^6.3.1
   share_plus: ^10.1.4
