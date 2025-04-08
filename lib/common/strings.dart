@@ -43,6 +43,22 @@ const Map<UuidFormat, String> uuidFormatTabs = <UuidFormat, String>{
 
 const String shareSubject = 'UUID from TapGuid';
 
+// -----------------------------------------------------------------------------------------------
+// Drawer items
+// -----------------------------------------------------------------------------------------------
+
+const String supportOurAppsDrawerItem = 'Support our free apps: try our Pro apps';
+const String pbwpDrawerItem = 'Pitch Black Wallpaper Pro';
+const String rcwpDrawerItem = 'RGB Color Wallpaper Pro';
+
+const String guidGeneratorDrawerItem = 'Generate GUIDs/UUIDs';
+const String settingsDrawerItem = 'Settings';
+
+const String helpDrawerItem = 'Help & Support';
+const String openSourceDrawerItem = 'Star on GitHub';
+const String openSourceDrawerItemSubtitle = 'Yes, it\'s open source!';
+const String rateAppDrawerItem = 'Rate App';
+
 // -----------------------------------------------------------------------------
 // Settings Screen
 // -----------------------------------------------------------------------------

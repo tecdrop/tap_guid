@@ -14,6 +14,7 @@ import '../common/urls.dart' as urls;
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
+import '../widgets/internal/app_drawer.dart';
 import '../widgets/uniform_wrappable_text.dart';
 import 'settings_screen.dart';
 
@@ -192,6 +193,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return Scaffold(
       // The app bar with tabs and actions
       appBar: _AppBar(tabController: _tabController, onAction: _onAppBarAction),
+
+      // The app drawer with screen navigation and app related urls
+      drawer: AppDrawer(headerColor: backColor),
 
       body:
           prefs.uuidColor.value
