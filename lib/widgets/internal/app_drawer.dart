@@ -34,7 +34,7 @@ class AppDrawer extends StatelessWidget {
           const SizedBox(height: 16.0),
 
           // The "Support our free apps" section
-          if (Platform.isAndroid || kIsWeb) ...[
+          if (kIsWeb || Platform.isAndroid) ...[
             ListTile(
               style: ListTileStyle.drawer,
               title: Text(strings.supportOurAppsDrawerItem),
