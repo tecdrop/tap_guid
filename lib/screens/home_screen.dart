@@ -15,6 +15,7 @@ import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
 import '../widgets/internal/app_drawer.dart';
+import '../widgets/internal/home_app_bar.dart';
 import '../widgets/uniform_wrappable_text.dart';
 import 'settings_screen.dart';
 
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.didChangeDependencies();
 
     // Cache the text style and character width for the UUID display
-    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+    final bool isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
     _uuidTextStyle =
         isLargeScreen
             ? Theme.of(context).textTheme.displaySmall!
@@ -168,25 +169,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   /// Perform the actions of the app bar.
-  void _onAppBarAction(_AppBarActions action) {
+  void _onAppBarAction(HomeAppBarActions action) {
     switch (action) {
       // Copy the UUID value in the current format to the clipboard
-      case _AppBarActions.copy:
+      case HomeAppBarActions.copy:
         utils.copyToClipboard(context, _uuidFormatValue);
         break;
 
       // Share the UUID value in the current format via the platform's share dialog
-      case _AppBarActions.share:
+      case HomeAppBarActions.share:
         Share.share(_uuidFormatValue, subject: strings.shareSubject);
         break;
 
       // Copy the color of the UUID to the clipboard
-      case _AppBarActions.copyColor:
+      case HomeAppBarActions.copyColor:
         utils.copyToClipboard(context, color_utils.toHexString(_uuidColor));
         break;
 
       // Perform a web search for the Uuid value in the current format.
-      case _AppBarActions.uniquenessSearch:
+      case HomeAppBarActions.uniquenessSearch:
         utils.launchUrlExternal(context, urls.webSearch(_uuidFormatValue));
         break;
     }
@@ -194,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+    final bool isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
     final EdgeInsets padding = EdgeInsets.symmetric(horizontal: isLargeScreen ? 64.0 : 16.0);
 
     final Color backColor =
@@ -210,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return Scaffold(
       // The app bar with tabs and actions
-      appBar: _AppBar(tabController: _tabController, onAction: _onAppBarAction),
+      appBar: HomeAppBar(tabController: _tabController, onAction: _onAppBarAction),
 
       // The app drawer with screen navigation and app related urls
       drawer: AppDrawer(headerColor: backColor, onItemTap: _onDrawerItemTap),
@@ -245,77 +246,4 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
     );
   }
-}
-
-/// The actions available in the app bar.
-enum _AppBarActions { copy, share, copyColor, uniquenessSearch }
-
-/// The app bar for the home screen.
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({
-    super.key, // ignore: unused_element_parameter
-    this.tabController,
-    required this.onAction,
-  });
-
-  /// The tab controller for the UUID format tabs.
-  final TabController? tabController;
-
-  /// The callback that is called when an app bar action is pressed.
-  final Function(_AppBarActions action) onAction;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
-    return AppBar(
-      title:
-          isLargeScreen
-              ? const Text(strings.homeScreenTitle)
-              : const Text(strings.homeScreenTitleShort),
-      actions: <Widget>[
-        // The copy action button
-        IconButton(
-          icon: const Icon(Icons.content_copy_rounded),
-          tooltip: strings.copyTooltip,
-          onPressed: () => onAction(_AppBarActions.copy),
-        ),
-        // The Share action button
-        IconButton(
-          icon: const Icon(Icons.share_rounded),
-          tooltip: strings.shareTooltip,
-          onPressed: () => onAction(_AppBarActions.share),
-        ),
-
-        PopupMenuButton<_AppBarActions>(
-          onSelected: onAction,
-          itemBuilder:
-              (BuildContext context) => <PopupMenuEntry<_AppBarActions>>[
-                // The Copy color menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.copyColor,
-                  child: Text(strings.copyColorAction),
-                ),
-
-                // The Uniqueness Search action button
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.uniquenessSearch,
-                  child: Text(strings.uniquenessSearchAction),
-                ),
-              ],
-        ),
-      ],
-      // The UUID format tabs
-      bottom: TabBar(
-        controller: tabController,
-        isScrollable: true,
-        tabs:
-            strings.uuidFormatTabs.keys
-                .map((format) => Tab(text: strings.uuidFormatTabs[format]))
-                .toList(),
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + kTextTabBarHeight);
 }

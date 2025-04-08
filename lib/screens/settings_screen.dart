@@ -19,7 +19,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    final bool isLargeScreen = MediaQuery.of(context).size.width > 600.0;
+    final bool isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
 
     final Widget vSpacer =
         isLargeScreen ? const SizedBox(height: 16.0) : const SizedBox(height: 8.0);
