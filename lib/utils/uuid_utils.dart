@@ -11,20 +11,22 @@ import '../common/types.dart';
 
 /// Formats a UUID string according to the specified format.
 String formatUuid(String uuid, {UuidFormat format = UuidFormat.standard, bool uppercase = false}) {
-  final String formattedUuid = switch (format) {
-    UuidFormat.standard => uuid,
-    UuidFormat.digits => uuid.replaceAll(RegExp(r'-'), ''),
-    UuidFormat.braces => '{$uuid}',
-    UuidFormat.parentheses => '($uuid)',
-    UuidFormat.urn => 'urn:uuid:$uuid',
+  // First apply uppercase if needed (except for base64 formats)
+  final String processedUuid =
+      (uppercase && format != UuidFormat.base64 && format != UuidFormat.base64url)
+          ? uuid.toUpperCase()
+          : uuid;
+
+  // Then apply the format to the already-processed UUID
+  return switch (format) {
+    UuidFormat.standard => processedUuid,
+    UuidFormat.digits => processedUuid.replaceAll(RegExp(r'-'), ''),
+    UuidFormat.braces => '{$processedUuid}',
+    UuidFormat.parentheses => '($processedUuid)',
+    UuidFormat.urn => 'urn:uuid:$processedUuid',
     UuidFormat.base64 => base64.encode(Uuid.parse(uuid)),
     UuidFormat.base64url => base64Url.encode(Uuid.parse(uuid)),
   };
-
-  // Uppercase the formatted UUID if required and if it is not base64 or base64url
-  return uppercase && format != UuidFormat.base64 && format != UuidFormat.base64url
-      ? formattedUuid.toUpperCase()
-      : formattedUuid;
 }
 
 /// 32-bit FNV-1a hash function.
