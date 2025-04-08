@@ -12,7 +12,7 @@ import '../../common/strings.dart' as strings;
 import '../../utils/color_utils.dart' as color_utils;
 
 /// The items that appear in the app drawer.
-enum AppDrawerItems { pbwp, rcwp, guidGenerator, settings, help, viewSource, rateApp }
+enum AppDrawerItems { pbwp, rcwp, guidGenerator, settings, help, openSource, rateApp }
 
 /// The main Material Design drawer of the app, with the app screens and app urls.
 class AppDrawer extends StatelessWidget {
@@ -22,7 +22,7 @@ class AppDrawer extends StatelessWidget {
   final Color headerColor;
 
   /// Called when an item in the drawer is tapped.
-  final void Function(BuildContext context, AppDrawerItems item)? onItemTap;
+  final void Function(AppDrawerItems item)? onItemTap;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class AppDrawer extends StatelessWidget {
             icon: custom_icons.github,
             title: strings.openSourceDrawerItem,
             subtitle: strings.openSourceDrawerItemSubtitle,
-            item: AppDrawerItems.viewSource,
+            item: AppDrawerItems.openSource,
           ),
 
           // Rate App drawer item
@@ -114,7 +114,7 @@ class AppDrawer extends StatelessWidget {
   }) {
     return ListTile(
       leading: icon != null ? Icon(icon) : null,
-      onTap: () => onItemTap?.call(context, item),
+      onTap: () => onItemTap?.call(item),
       selected: selected,
       style: ListTileStyle.drawer,
       subtitle: subtitle != null ? Text(subtitle) : null,

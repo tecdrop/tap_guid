@@ -117,6 +117,56 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     setState(() => _genNewUuid());
   }
 
+  /// Navigate to the settings screen and update the UUID format if necessary after returning.
+  Future<void> _gotoSettingsScreen() async {
+    final UuidVersion oldVersion = prefs.uuidVersion.value;
+    await utils.navigateTo(context: context, screen: const SettingsScreen());
+    setState(
+      // Generate a new UUID if the UUID version has changed, or just update the format
+      () => prefs.uuidVersion.value != oldVersion ? _genNewUuid() : _updateUuidFormat(),
+    );
+  }
+
+  /// Perform the actions of the app drawer.
+  void _onDrawerItemTap(AppDrawerItems item) {
+    // First close the drawer
+    Navigator.pop(context);
+
+    switch (item) {
+      // Open the urls of the Pro apps
+      case AppDrawerItems.pbwp:
+        utils.launchUrlExternal(context, urls.pbwp);
+        break;
+      case AppDrawerItems.rcwp:
+        utils.launchUrlExternal(context, urls.rcwp);
+        break;
+
+      case AppDrawerItems.guidGenerator:
+        // Do nothing - simply stay on the Home screen as we are already there
+        break;
+
+      // Open the app settings screen and update the display when the user returns
+      case AppDrawerItems.settings:
+        _gotoSettingsScreen();
+        break;
+
+      // Open the app home page in the default browser
+      case AppDrawerItems.help:
+        utils.launchUrlExternal(context, urls.help);
+        break;
+
+      // Open the open source repository in the default browser
+      case AppDrawerItems.openSource:
+        utils.launchUrlExternal(context, urls.openSource);
+        break;
+
+      // Open the Google Play app page to allow the user to rate the app.
+      case AppDrawerItems.rateApp:
+        utils.launchUrlExternal(context, urls.rateApp);
+        break;
+    }
+  }
+
   /// Perform the actions of the app bar.
   void _onAppBarAction(_AppBarActions action) {
     switch (action) {
@@ -138,38 +188,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       // Perform a web search for the Uuid value in the current format.
       case _AppBarActions.uniquenessSearch:
         utils.launchUrlExternal(context, urls.webSearch(_uuidFormatValue));
-        break;
-
-      // Open the app settings screen and update the display when the user returns
-      case _AppBarActions.settings:
-        () async {
-          final UuidVersion oldVersion = prefs.uuidVersion.value;
-          await utils.navigateTo(context: context, screen: const SettingsScreen());
-          setState(
-            // Generate a new UUID if the UUID version has changed, or just update the format
-            () => prefs.uuidVersion.value != oldVersion ? _genNewUuid() : _updateUuidFormat(),
-          );
-        }();
-        break;
-
-      // Open the app home page in the default browser
-      case _AppBarActions.help:
-        utils.launchUrlExternal(context, urls.help);
-        break;
-
-      // Open the open source repository in the default browser
-      case _AppBarActions.openSource:
-        utils.launchUrlExternal(context, urls.openSource);
-        break;
-
-      // Open the Google Play app page to allow the user to rate the app.
-      case _AppBarActions.rate:
-        utils.launchUrlExternal(context, urls.rateApp);
-        break;
-
-      // Open the Pro Apps page in the default browser
-      case _AppBarActions.proApps:
-        utils.launchUrlExternal(context, urls.proApps);
         break;
     }
   }
@@ -195,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: _AppBar(tabController: _tabController, onAction: _onAppBarAction),
 
       // The app drawer with screen navigation and app related urls
-      drawer: AppDrawer(headerColor: backColor),
+      drawer: AppDrawer(headerColor: backColor, onItemTap: _onDrawerItemTap),
 
       body:
           prefs.uuidColor.value
@@ -230,17 +248,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 }
 
 /// The actions available in the app bar.
-enum _AppBarActions {
-  copy,
-  share,
-  copyColor,
-  uniquenessSearch,
-  settings,
-  help,
-  openSource,
-  rate,
-  proApps,
-}
+enum _AppBarActions { copy, share, copyColor, uniquenessSearch }
 
 /// The app bar for the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -292,40 +300,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                 const PopupMenuItem<_AppBarActions>(
                   value: _AppBarActions.uniquenessSearch,
                   child: Text(strings.uniquenessSearchAction),
-                ),
-
-                // The Settings menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.settings,
-                  child: Text(strings.settingsAction),
-                ),
-
-                const PopupMenuDivider(),
-
-                // The Help menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.help,
-                  child: Text(strings.helpAction),
-                ),
-
-                // The Open Source menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.openSource,
-                  child: Text(strings.openSourceAction),
-                ),
-
-                // The Rate menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.rate,
-                  child: Text(strings.rateAction),
-                ),
-
-                const PopupMenuDivider(),
-
-                // The Go Pro menu item
-                const PopupMenuItem<_AppBarActions>(
-                  value: _AppBarActions.proApps,
-                  child: Text(strings.proAppsAction),
                 ),
               ],
         ),
