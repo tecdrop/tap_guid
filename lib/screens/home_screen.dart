@@ -173,7 +173,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     switch (action) {
       // Copy the UUID value in the current format to the clipboard
       case HomeAppBarActions.copy:
-        utils.copyToClipboard(context, _uuidFormatValue);
+        // Do not display the UUID value in the snackbar, as it may be too long for a snackbar
+        utils.copyToClipboard(context, _uuidFormatValue, valueToDisplay: strings.uuid);
         break;
 
       // Share the UUID value in the current format via the platform's share dialog

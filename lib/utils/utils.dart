@@ -46,12 +46,12 @@ void showSnackBarForAsync(ScaffoldMessengerState messengerState, String text) {
 }
 
 /// Stores the given text on the clipboard, and shows a [SnackBar] on success and on failure.
-Future<void> copyToClipboard(BuildContext context, String value) async {
+Future<void> copyToClipboard(BuildContext context, String value, {String? valueToDisplay}) async {
   ScaffoldMessengerState messengerState = ScaffoldMessenger.of(context);
   try {
     await Clipboard.setData(ClipboardData(text: value));
-    showSnackBarForAsync(messengerState, strings.copiedSnack(value));
+    showSnackBarForAsync(messengerState, strings.copiedSnack(valueToDisplay ?? value));
   } catch (error) {
-    showSnackBarForAsync(messengerState, strings.copiedErrorSnack(value));
+    showSnackBarForAsync(messengerState, strings.copiedErrorSnack(valueToDisplay ?? value));
   }
 }

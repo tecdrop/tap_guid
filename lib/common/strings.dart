@@ -11,6 +11,12 @@ import 'types.dart';
 const String appName = 'TapGuid';
 
 // -----------------------------------------------------------------------------
+// Common
+// -----------------------------------------------------------------------------
+
+const String uuid = 'UUID';
+
+// -----------------------------------------------------------------------------
 // Home Screen
 // -----------------------------------------------------------------------------
 
@@ -20,7 +26,7 @@ const String newUuidTooltip = 'Generate a new UUID';
 
 const String copyTooltip = 'Copy UUID to clipboard';
 String copiedSnack(String value) => '$value copied to clipboard';
-String copiedErrorSnack(String value) => 'Copy to clipboard failed: $value';
+String copiedErrorSnack(String value) => 'Failed to copy $value to clipboard';
 
 const String copyColorAction = 'Copy color code';
 const String shareTooltip = 'Share UUID';
