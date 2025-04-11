@@ -12,6 +12,7 @@ import '../common/strings.dart' as strings;
 import '../common/types.dart';
 import '../common/urls.dart' as urls;
 import '../utils/color_utils.dart' as color_utils;
+// import '../utils/internal_utils.dart';
 import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
 import '../widgets/internal/app_drawer.dart';
@@ -61,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       UuidVersion.v7 => _uuid.v7(),
       UuidVersion.v8 => _uuid.v8(),
     };
+    // _uuidValue = getMockUuid(4);
     _uuidColor = getUuidColor(_uuidValue);
     _updateUuidFormat();
   }
