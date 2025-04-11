@@ -62,7 +62,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       UuidVersion.v7 => _uuid.v7(),
       UuidVersion.v8 => _uuid.v8(),
     };
+
+    // TODO: Make sure the following line is commented out in production
     // _uuidValue = getMockUuid(4);
+
     _uuidColor = getUuidColor(_uuidValue);
     _updateUuidFormat();
   }
