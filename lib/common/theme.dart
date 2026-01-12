@@ -21,7 +21,7 @@ ThemeData getAppTheme(Brightness brightness) {
       tertiary: brightness == Brightness.dark ? Color(0xFF4D4D4D) : Color(0xFFBFBFBF),
       primaryContainer: accentColor,
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       unselectedLabelColor: accentColor.withValues(alpha: 0.5),
       labelColor: accentColor,
       indicatorColor: accentColor,
