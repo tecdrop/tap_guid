@@ -87,14 +87,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       setState(() => _updateUuidFormat());
     });
 
-    // Generate an initial UUID with default preferences, then reload with saved preferences
+    // Generate the initial UUID (preferences are already loaded in main.dart)
     _genNewUuid();
-
-    // Load app preferences and regenerate UUID with the correct version
-    () async {
-      await prefs.load();
-      setState(() => _genNewUuid());
-    }();
   }
 
   @override
