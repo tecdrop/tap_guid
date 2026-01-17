@@ -15,4 +15,4 @@ const _kFontFam = 'CustomIcons';
 const String? _kFontPkg = null;
 
 /// The GitHub mark icon from Octicons.
-const IconData github = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+const github = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);

@@ -3,7 +3,6 @@
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:uuid/uuid.dart';
@@ -13,7 +12,7 @@ import 'package:tap_guid/utils/uuid_utils.dart';
 
 void main() {
   group('UUID formatting tests', () {
-    const String testUuid = '123e4567-e89b-12d3-a456-426614174000';
+    const testUuid = '123e4567-e89b-12d3-a456-426614174000';
 
     test('Standard format should return unchanged UUID', () {
       expect(formatUuid(testUuid, format: UuidFormat.standard), testUuid);
@@ -56,9 +55,9 @@ void main() {
     });
 
     test('Base64 formats should properly encode and ignore uppercase flag', () {
-      final List<int> bytes = Uuid.parse(testUuid);
-      final String expectedBase64 = base64.encode(bytes);
-      final String expectedBase64Url = base64Url.encode(bytes);
+      final bytes = Uuid.parse(testUuid);
+      final expectedBase64 = base64.encode(bytes);
+      final expectedBase64Url = base64Url.encode(bytes);
 
       expect(formatUuid(testUuid, format: UuidFormat.base64), expectedBase64);
       expect(formatUuid(testUuid, format: UuidFormat.base64url), expectedBase64Url);
@@ -76,7 +75,7 @@ void main() {
     });
 
     test('Malformed UUIDs should throw appropriate exceptions in base64 formats', () {
-      const String malformedUuid = 'not-a-valid-uuid';
+      const malformedUuid = 'not-a-valid-uuid';
       // Standard formatting shouldn't validate UUID format
       expect(formatUuid(malformedUuid, format: UuidFormat.standard), malformedUuid);
 
@@ -88,27 +87,27 @@ void main() {
 
   group('UUID color tests', () {
     test('getUuidColor returns consistent colors for the same UUID', () {
-      const String uuid1 = '123e4567-e89b-12d3-a456-426614174000';
+      const uuid1 = '123e4567-e89b-12d3-a456-426614174000';
 
       // Same UUID should produce the same color
-      final Color color1a = getUuidColor(uuid1);
-      final Color color1b = getUuidColor(uuid1);
+      final color1a = getUuidColor(uuid1);
+      final color1b = getUuidColor(uuid1);
       expect(color1a, equals(color1b));
     });
 
     test('getUuidColor returns different colors for different UUIDs', () {
-      const String uuid1 = '123e4567-e89b-12d3-a456-426614174000';
-      const String uuid2 = '00112233-4455-6677-8899-aabbccddeeff';
+      const uuid1 = '123e4567-e89b-12d3-a456-426614174000';
+      const uuid2 = '00112233-4455-6677-8899-aabbccddeeff';
 
       // Different UUIDs should produce different colors
-      final Color color1 = getUuidColor(uuid1);
-      final Color color2 = getUuidColor(uuid2);
+      final color1 = getUuidColor(uuid1);
+      final color2 = getUuidColor(uuid2);
       expect(color1, isNot(equals(color2)));
     });
 
     test('getUuidColor always returns colors with alpha set to 1.0 (fully opaque)', () {
-      const String uuid1 = '123e4567-e89b-12d3-a456-426614174000';
-      const String uuid2 = '00112233-4455-6677-8899-aabbccddeeff';
+      const uuid1 = '123e4567-e89b-12d3-a456-426614174000';
+      const uuid2 = '00112233-4455-6677-8899-aabbccddeeff';
 
       // Colors should always have alpha = 1.0 (fully opaque)
       expect(getUuidColor(uuid1).a, equals(1.0));
@@ -117,16 +116,16 @@ void main() {
 
     test('FNV hash function produces expected output pattern', () {
       // Base UUID
-      const String baseUuid = '123e4567-e89b-12d3-a456-426614174000';
-      final Color baseColor = getUuidColor(baseUuid);
+      const baseUuid = '123e4567-e89b-12d3-a456-426614174000';
+      final baseColor = getUuidColor(baseUuid);
 
       // Change just one character
-      const String singleCharChange = '123e4567-e89b-12d3-a456-426614174001';
-      final Color singleCharColor = getUuidColor(singleCharChange);
+      const singleCharChange = '123e4567-e89b-12d3-a456-426614174001';
+      final singleCharColor = getUuidColor(singleCharChange);
 
       // Swap two characters (first and last digits)
-      const String swappedChars = '023e4567-e89b-12d3-a456-426614174001';
-      final Color swappedColor = getUuidColor(swappedChars);
+      const swappedChars = '023e4567-e89b-12d3-a456-426614174001';
+      final swappedColor = getUuidColor(swappedChars);
 
       // All should produce different colors
       expect(baseColor, isNot(equals(singleCharColor)));

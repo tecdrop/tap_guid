@@ -21,8 +21,8 @@ class TapGuidApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: strings.appName,
-      theme: getAppTheme(Brightness.light),
-      darkTheme: getAppTheme(Brightness.dark),
+      theme: getAppTheme(.light),
+      darkTheme: getAppTheme(.dark),
       home: const HomeScreen(),
     );
   }

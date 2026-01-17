@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 /// Returns the black or white contrast color of the given [Color].
 Color contrastColor(Color color) {
   switch (ThemeData.estimateBrightnessForColor(color)) {
-    case Brightness.light:
+    case .light:
       return Colors.black;
-    case Brightness.dark:
+    case .dark:
       return Colors.white;
   }
 }
@@ -18,6 +18,6 @@ Color contrastColor(Color color) {
 String toHexString(Color color, {bool withHash = true}) {
   // Converts a normalized color channel (0.0 to 1.0) to a two-digit hex string.
   String cToHex(double c) => ((c * 255.0).round() & 0xff).toRadixString(16).padLeft(2, '0');
-  final String hex = '${cToHex(color.r)}${cToHex(color.g)}${cToHex(color.b)}'.toUpperCase();
+  final hex = '${cToHex(color.r)}${cToHex(color.g)}${cToHex(color.b)}'.toUpperCase();
   return withHash ? '#$hex' : hex;
 }

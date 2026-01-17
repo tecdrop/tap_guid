@@ -8,76 +8,76 @@ import 'types.dart';
 // App
 // -----------------------------------------------------------------------------
 
-const String appName = 'TapGuid';
+const appName = 'TapGuid';
 
 // -----------------------------------------------------------------------------
 // Common
 // -----------------------------------------------------------------------------
 
-const String uuid = 'UUID';
+const uuid = 'UUID';
 
 // -----------------------------------------------------------------------------
 // Home Screen
 // -----------------------------------------------------------------------------
 
-const String homeScreenTitleShort = 'TapGuid';
-const String homeScreenTitle = 'TapGuid - UUID Generator';
-const String newUuidTooltip = 'Generate a new UUID';
+const homeScreenTitleShort = 'TapGuid';
+const homeScreenTitle = 'TapGuid - UUID Generator';
+const newUuidTooltip = 'Generate a new UUID';
 
-const String copyTooltip = 'Copy UUID to clipboard';
+const copyTooltip = 'Copy UUID to clipboard';
 String copiedSnack(String value) => '$value copied to clipboard';
 String copiedErrorSnack(String value) => 'Failed to copy $value to clipboard';
 
-const String copyColorAction = 'Copy color code';
-const String shareTooltip = 'Share UUID';
-const String uniquenessSearchAction = 'Uniqueness search';
-const String settingsAction = 'Settings';
-const String helpAction = 'Help & support';
-const String openSourceAction = 'Star on GitHub';
-const String rateAction = 'Rate app';
-const String proAppsAction = 'Try our Pro apps';
+const copyColorAction = 'Copy color code';
+const shareTooltip = 'Share UUID';
+const uniquenessSearchAction = 'Uniqueness search';
+const settingsAction = 'Settings';
+const helpAction = 'Help & support';
+const openSourceAction = 'Star on GitHub';
+const rateAction = 'Rate app';
+const proAppsAction = 'Try our Pro apps';
 
-const Map<UuidFormat, String> uuidFormatTabs = <UuidFormat, String>{
-  UuidFormat.standard: 'Standard',
-  UuidFormat.digits: 'Digits',
-  UuidFormat.braces: 'Braces',
-  UuidFormat.parentheses: 'Parentheses',
-  UuidFormat.urn: 'URN',
-  UuidFormat.base64: 'Base64',
-  UuidFormat.base64url: 'Base64Url',
+const uuidFormatTabs = <UuidFormat, String>{
+  .standard: 'Standard',
+  .digits: 'Digits',
+  .braces: 'Braces',
+  .parentheses: 'Parentheses',
+  .urn: 'URN',
+  .base64: 'Base64',
+  .base64url: 'Base64Url',
 };
 
-const String shareSubject = 'UUID from TapGuid';
+const shareSubject = 'UUID from TapGuid';
 
 // -----------------------------------------------------------------------------------------------
 // Drawer items
 // -----------------------------------------------------------------------------------------------
 
-const String supportOurAppsDrawerItem = 'Support our free apps: try our Pro apps';
-const String pbwpDrawerItem = 'Pitch Black Wallpaper Pro';
-const String rcwpDrawerItem = 'RGB Color Wallpaper Pro';
+const supportOurAppsDrawerItem = 'Support our free apps: try our Pro apps';
+const pbwpDrawerItem = 'Pitch Black Wallpaper Pro';
+const rcwpDrawerItem = 'RGB Color Wallpaper Pro';
 
-const String guidGeneratorDrawerItem = 'Generate GUIDs/UUIDs';
-const String settingsDrawerItem = 'Settings';
+const guidGeneratorDrawerItem = 'Generate GUIDs/UUIDs';
+const settingsDrawerItem = 'Settings';
 
-const String helpDrawerItem = 'Help & Support';
-const String openSourceDrawerItem = 'Star on GitHub';
-const String openSourceDrawerItemSubtitle = 'Yes, it\'s open source!';
-const String rateAppDrawerItem = 'Rate App';
+const helpDrawerItem = 'Help & Support';
+const openSourceDrawerItem = 'Star on GitHub';
+const openSourceDrawerItemSubtitle = 'Yes, it\'s open source!';
+const rateAppDrawerItem = 'Rate App';
 
 // -----------------------------------------------------------------------------
 // Settings Screen
 // -----------------------------------------------------------------------------
 
-const String settingsScreenTitle = 'Settings';
+const settingsScreenTitle = 'Settings';
 
-const String uuidVersionSetting = 'UUID version';
-const Map<UuidVersion, String> uuidVersionNames = <UuidVersion, String>{
-  UuidVersion.v1: 'v1',
-  UuidVersion.v4: 'v4',
-  UuidVersion.v6: 'v6',
-  UuidVersion.v7: 'v7',
-  UuidVersion.v8: 'v8',
+const uuidVersionSetting = 'UUID version';
+const uuidVersionNames = <UuidVersion, String>{
+  .v1: 'v1',
+  .v4: 'v4',
+  .v6: 'v6',
+  .v7: 'v7',
+  .v8: 'v8',
 };
-const String uppercaseDigitsSetting = 'Use uppercase letters in UUIDs';
-const String uuidColorSetting = 'Computed colors for each UUID';
+const uppercaseDigitsSetting = 'Use uppercase letters in UUIDs';
+const uuidColorSetting = 'Computed colors for each UUID';

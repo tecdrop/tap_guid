@@ -5,13 +5,11 @@
 /// Urls used in the app.
 library;
 
-const String pbwp =
-    'https://play.google.com/store/apps/details?id=com.tecdrop.pitchblackwallpaperpro';
-const String rcwp =
-    'https://play.google.com/store/apps/details?id=com.tecdrop.rgbcolorwallpaperpro';
+const pbwp = 'https://play.google.com/store/apps/details?id=com.tecdrop.pitchblackwallpaperpro';
+const rcwp = 'https://play.google.com/store/apps/details?id=com.tecdrop.rgbcolorwallpaperpro';
 
-const String help = 'https://www.tecdrop.com/tapguid/';
-const String openSource = 'https://github.com/tecdrop/tap_guid';
-const String rateApp = 'https://play.google.com/store/apps/details?id=com.tecdrop.tapguid';
+const help = 'https://www.tecdrop.com/tapguid/';
+const openSource = 'https://github.com/tecdrop/tap_guid';
+const rateApp = 'https://play.google.com/store/apps/details?id=com.tecdrop.tapguid';
 
 String webSearch(String query) => 'https://www.google.com/search?q="${Uri.encodeComponent(query)}"';

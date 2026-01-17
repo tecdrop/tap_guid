@@ -20,7 +20,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
     // Get the initial UUID text
-    final String initialText =
+    final initialText =
         (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
 
     // Switch to the Braces tab
@@ -28,7 +28,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Get the new UUID text
-    final String bracesText =
+    final bracesText =
         (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
 
     // The text should have changed and now contain braces
@@ -41,7 +41,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
     // Get the initial UUID text
-    final String initialText =
+    final initialText =
         (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
 
     // Tap the FAB to generate a new UUID
@@ -49,8 +49,7 @@ void main() {
     await tester.pump();
 
     // Get the new UUID text
-    final String newText =
-        (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
+    final newText = (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
 
     // The UUID should have changed
     expect(newText, isNot(equals(initialText)));

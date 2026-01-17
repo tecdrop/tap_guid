@@ -19,10 +19,11 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    final bool isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
+    final isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
 
-    final Widget vSpacer =
-        isLargeScreen ? const SizedBox(height: 16.0) : const SizedBox(height: 8.0);
+    final Widget vSpacer = isLargeScreen
+        ? const SizedBox(height: 16.0)
+        : const SizedBox(height: 8.0);
 
     return Scaffold(
       appBar: AppBar(title: const Text(strings.settingsScreenTitle)),
@@ -36,21 +37,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // The UUID version setting
               ListTile(
-                title: Text(strings.uuidVersionSetting),
+                title: const Text(strings.uuidVersionSetting),
                 subtitle: Wrap(
                   spacing: isLargeScreen ? 16.0 : 8.0,
-                  children:
-                      UuidVersion.values.map((UuidVersion version) {
-                        return ChoiceChip(
-                          label: Text(strings.uuidVersionNames[version]!),
-                          selected: prefs.uuidVersion.value == version,
-                          onSelected: (bool selected) {
-                            if (selected) {
-                              setState(() => prefs.uuidVersion.value = version);
-                            }
-                          },
-                        );
-                      }).toList(),
+                  children: UuidVersion.values.map((UuidVersion version) {
+                    return ChoiceChip(
+                      label: Text(strings.uuidVersionNames[version]!),
+                      selected: prefs.uuidVersion.value == version,
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          setState(() => prefs.uuidVersion.value = version);
+                        }
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
 

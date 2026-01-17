@@ -11,32 +11,34 @@ void main() {
   testWidgets('UniformWrappableText renders with uniform character width', (
     WidgetTester tester,
   ) async {
-    const String testText = '123e4567-e89b-12d3';
+    const testText = '123e4567-e89b-12d3';
 
     await tester.pumpWidget(
-      const MaterialApp(home: Scaffold(body: Center(child: UniformWrappableText(testText)))),
+      const MaterialApp(
+        home: Scaffold(body: Center(child: UniformWrappableText(testText))),
+      ),
     );
 
     // Should render one Text widget per character
     expect(find.byType(Text), findsNWidgets(testText.length));
 
     // All SizedBox widgets should have the same width
-    final List<SizedBox> sizedBoxes = tester.widgetList<SizedBox>(find.byType(SizedBox)).toList();
-    final double firstWidth = sizedBoxes.first.width!;
+    final sizedBoxes = tester.widgetList<SizedBox>(find.byType(SizedBox)).toList();
+    final firstWidth = sizedBoxes.first.width!;
 
     // All widths should be equal
-    for (final SizedBox box in sizedBoxes) {
+    for (final box in sizedBoxes) {
       expect(box.width, equals(firstWidth));
     }
   });
 
   testWidgets('getWidestCharacterWidth calculates correct width', (WidgetTester tester) async {
     // Test with different font sizes
-    const TextStyle smallStyle = TextStyle(fontSize: 10.0);
-    const TextStyle largeStyle = TextStyle(fontSize: 20.0);
+    const smallStyle = TextStyle(fontSize: 10.0);
+    const largeStyle = TextStyle(fontSize: 20.0);
 
-    final double smallWidth = UniformWrappableText.getWidestCharacterWidth(smallStyle);
-    final double largeWidth = UniformWrappableText.getWidestCharacterWidth(largeStyle);
+    final smallWidth = UniformWrappableText.getWidestCharacterWidth(smallStyle);
+    final largeWidth = UniformWrappableText.getWidestCharacterWidth(largeStyle);
 
     // Width should be positive
     expect(smallWidth, isPositive);
