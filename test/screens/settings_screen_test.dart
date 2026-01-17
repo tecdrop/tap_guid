@@ -34,7 +34,7 @@ void main() {
 
   testWidgets('Changing UUID version updates preference', (WidgetTester tester) async {
     // Start with v4 selected
-    prefs.uuidVersion.value = UuidVersion.v4;
+    prefs.uuidVersion.value = .v4;
 
     await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
 

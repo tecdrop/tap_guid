@@ -51,7 +51,7 @@ Future<void> copyToClipboard(BuildContext context, String value, {String? valueT
   try {
     await Clipboard.setData(ClipboardData(text: value));
     showSnackBarForAsync(messengerState, strings.copiedSnack(valueToDisplay ?? value));
-  } catch (error) {
+  } on Exception {
     showSnackBarForAsync(messengerState, strings.copiedErrorSnack(valueToDisplay ?? value));
   }
 }

@@ -7,7 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:uuid/uuid.dart';
 
-import 'package:tap_guid/common/types.dart';
 import 'package:tap_guid/utils/uuid_utils.dart';
 
 void main() {
@@ -15,41 +14,41 @@ void main() {
     const testUuid = '123e4567-e89b-12d3-a456-426614174000';
 
     test('Standard format should return unchanged UUID', () {
-      expect(formatUuid(testUuid, format: UuidFormat.standard), testUuid);
+      expect(formatUuid(testUuid, format: .standard), testUuid);
       expect(
-        formatUuid(testUuid, format: UuidFormat.standard, uppercase: true),
+        formatUuid(testUuid, format: .standard, uppercase: true),
         testUuid.toUpperCase(),
       );
     });
 
     test('Digits format should remove hyphens', () {
-      expect(formatUuid(testUuid, format: UuidFormat.digits), '123e4567e89b12d3a456426614174000');
+      expect(formatUuid(testUuid, format: .digits), '123e4567e89b12d3a456426614174000');
       expect(
-        formatUuid(testUuid, format: UuidFormat.digits, uppercase: true),
+        formatUuid(testUuid, format: .digits, uppercase: true),
         '123E4567E89B12D3A456426614174000',
       );
     });
 
     test('Braces format should add curly braces', () {
-      expect(formatUuid(testUuid, format: UuidFormat.braces), '{$testUuid}');
+      expect(formatUuid(testUuid, format: .braces), '{$testUuid}');
       expect(
-        formatUuid(testUuid, format: UuidFormat.braces, uppercase: true),
+        formatUuid(testUuid, format: .braces, uppercase: true),
         '{${testUuid.toUpperCase()}}',
       );
     });
 
     test('Parentheses format should add round brackets', () {
-      expect(formatUuid(testUuid, format: UuidFormat.parentheses), '($testUuid)');
+      expect(formatUuid(testUuid, format: .parentheses), '($testUuid)');
       expect(
-        formatUuid(testUuid, format: UuidFormat.parentheses, uppercase: true),
+        formatUuid(testUuid, format: .parentheses, uppercase: true),
         '(${testUuid.toUpperCase()})',
       );
     });
 
     test('URN format should add urn:uuid: prefix', () {
-      expect(formatUuid(testUuid, format: UuidFormat.urn), 'urn:uuid:$testUuid');
+      expect(formatUuid(testUuid, format: .urn), 'urn:uuid:$testUuid');
       expect(
-        formatUuid(testUuid, format: UuidFormat.urn, uppercase: true),
+        formatUuid(testUuid, format: .urn, uppercase: true),
         'urn:uuid:${testUuid.toUpperCase()}',
       );
     });
@@ -59,13 +58,13 @@ void main() {
       final expectedBase64 = base64.encode(bytes);
       final expectedBase64Url = base64Url.encode(bytes);
 
-      expect(formatUuid(testUuid, format: UuidFormat.base64), expectedBase64);
-      expect(formatUuid(testUuid, format: UuidFormat.base64url), expectedBase64Url);
+      expect(formatUuid(testUuid, format: .base64), expectedBase64);
+      expect(formatUuid(testUuid, format: .base64url), expectedBase64Url);
 
       // Uppercase should be ignored for base64 formats
-      expect(formatUuid(testUuid, format: UuidFormat.base64, uppercase: true), expectedBase64);
+      expect(formatUuid(testUuid, format: .base64, uppercase: true), expectedBase64);
       expect(
-        formatUuid(testUuid, format: UuidFormat.base64url, uppercase: true),
+        formatUuid(testUuid, format: .base64url, uppercase: true),
         expectedBase64Url,
       );
     });
@@ -77,11 +76,11 @@ void main() {
     test('Malformed UUIDs should throw appropriate exceptions in base64 formats', () {
       const malformedUuid = 'not-a-valid-uuid';
       // Standard formatting shouldn't validate UUID format
-      expect(formatUuid(malformedUuid, format: UuidFormat.standard), malformedUuid);
+      expect(formatUuid(malformedUuid, format: .standard), malformedUuid);
 
       // Base64 formats should throw because Uuid.parse will fail
-      expect(() => formatUuid(malformedUuid, format: UuidFormat.base64), throwsException);
-      expect(() => formatUuid(malformedUuid, format: UuidFormat.base64url), throwsException);
+      expect(() => formatUuid(malformedUuid, format: .base64), throwsException);
+      expect(() => formatUuid(malformedUuid, format: .base64url), throwsException);
     });
   });
 

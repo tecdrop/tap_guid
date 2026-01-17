@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 
 /// Returns the black or white contrast color of the given [Color].
 Color contrastColor(Color color) {
-  switch (ThemeData.estimateBrightnessForColor(color)) {
-    case .light:
-      return Colors.black;
-    case .dark:
-      return Colors.white;
-  }
+  return switch (ThemeData.estimateBrightnessForColor(color)) {
+    .light => Colors.black,
+    .dark => Colors.white,
+  };
 }
 
 /// Returns the hexadecimal string representation of the given [Color].

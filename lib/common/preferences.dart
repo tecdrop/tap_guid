@@ -2,10 +2,12 @@
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:simple_app_preferences/simple_app_preferences.dart';
-import 'package:tap_guid/common/types.dart';
+
+import 'types.dart';
 
 /// Stores the UUID version to use when generating UUIDs.
 ///
@@ -36,9 +38,8 @@ Future<void> load() async {
     final preferences = await SharedPreferences.getInstance();
     uppercaseDigits.loadValue(preferences);
     uuidColor.loadValue(preferences);
-  } catch (e) {
+  } on Exception catch (e) {
     // We can ignore errors here, as the default values will be used.
-    // ignore: avoid_print
-    print('Error loading preferences: $e');
+    if (kDebugMode) debugPrint('Error loading preferences: $e');
   }
 }
