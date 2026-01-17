@@ -36,6 +36,7 @@ var uuidColor = AppPreference<bool>(defaultValue: true, key: 'uuidColor');
 Future<void> load() async {
   try {
     final preferences = await SharedPreferences.getInstance();
+    uuidVersion.loadValue(preferences);
     uppercaseDigits.loadValue(preferences);
     uuidColor.loadValue(preferences);
   } on Exception catch (e) {

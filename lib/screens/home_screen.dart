@@ -87,14 +87,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       setState(() => _updateUuidFormat());
     });
 
-    // Load app preferences
+    // Generate an initial UUID with default preferences, then reload with saved preferences
+    _genNewUuid();
+
+    // Load app preferences and regenerate UUID with the correct version
     () async {
       await prefs.load();
-      setState(() {});
+      setState(() => _genNewUuid());
     }();
-
-    // Generate a new UUID when the screen is first displayed
-    _genNewUuid();
   }
 
   @override
