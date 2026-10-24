@@ -164,13 +164,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
+  /// Copies the UUID value in the current format to the clipboard.
+  void _copyUuid() {
+    // Do not display the UUID value in the snackbar, as it may be too long for a snackbar
+    utils.copyToClipboard(context, _uuidFormatValue, valueToDisplay: strings.uuid);
+  }
+
   /// Perform the actions of the app bar.
   void _onAppBarAction(HomeAppBarActions action) {
     switch (action) {
       // Copy the UUID value in the current format to the clipboard
       case .copy:
-        // Do not display the UUID value in the snackbar, as it may be too long for a snackbar
-        utils.copyToClipboard(context, _uuidFormatValue, valueToDisplay: strings.uuid);
+        _copyUuid();
         break;
 
       // Share the UUID value in the current format via the platform's share dialog
@@ -204,11 +209,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final backColor = prefs.uuidColor.value ? _uuidColor : Theme.of(context).colorScheme.tertiary;
     final foreColor = color_utils.contrastColor(backColor);
 
-    // The UUID display with uniform width characters
-    final Widget uuidText = UniformWrappableText(
-      _uuidFormatValue,
-      style: _uuidTextStyle.copyWith(color: foreColor),
-      characterWidth: _uuidCharacterWidth,
+    // The UUID display with uniform width characters, copied to the clipboard when tapped
+    final Widget uuidText = Semantics(
+      onTapHint: strings.copyTooltip,
+      child: GestureDetector(
+        behavior: .opaque,
+        onTap: _copyUuid,
+        child: UniformWrappableText(
+          _uuidFormatValue,
+          style: _uuidTextStyle.copyWith(color: foreColor),
+          characterWidth: _uuidCharacterWidth,
+        ),
+      ),
     );
 
     return Scaffold(

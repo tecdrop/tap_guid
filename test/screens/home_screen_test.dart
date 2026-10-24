@@ -2,9 +2,11 @@
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:tap_guid/common/strings.dart' as strings;
 import 'package:tap_guid/screens/home_screen.dart';
 import 'package:tap_guid/widgets/uniform_wrappable_text.dart';
 
@@ -53,5 +55,48 @@ void main() {
 
     // The UUID should have changed
     expect(newText, isNot(equals(initialText)));
+  });
+
+  testWidgets('Tapping the UUID copies it to the clipboard', (WidgetTester tester) async {
+    // Capture what the app writes to the clipboard
+    String? copiedText;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (
+      MethodCall call,
+    ) async {
+      if (call.method == 'Clipboard.setData') {
+        copiedText = (call.arguments as Map<Object?, Object?>)['text'] as String?;
+      }
+      return null;
+    });
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      ),
+    );
+
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+    final uuid = (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
+
+    await tester.tap(find.byType(UniformWrappableText));
+    await tester.pump();
+
+    expect(copiedText, equals(uuid));
+    expect(find.text(strings.copiedSnack(strings.uuid)), findsOneWidget);
+  });
+
+  testWidgets('Screen readers can copy the UUID with a hint', (WidgetTester tester) async {
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+    final uuid = (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
+
+    // The UUID is one node that can be tapped, with the copy hint
+    expect(
+      tester.getSemantics(find.bySemanticsLabel(uuid)),
+      matchesSemantics(label: uuid, hasTapAction: true, onTapHint: strings.copyTooltip),
+    );
+
+    semantics.dispose();
   });
 }
