@@ -175,7 +175,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
       // Share the UUID value in the current format via the platform's share dialog
       case .share:
-        Share.share(_uuidFormatValue, subject: strings.shareSubject);
+        SharePlus.instance.share(
+          ShareParams(text: _uuidFormatValue, subject: strings.shareSubject),
+        );
         break;
 
       // Copy the color of the UUID to the clipboard
