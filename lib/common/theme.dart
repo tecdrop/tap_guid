@@ -35,5 +35,13 @@ ThemeData getAppTheme(Brightness brightness) {
       ),
       secondaryLabelStyle: TextStyle(color: accentContrastColor),
     ),
+    // Keep the thumb of a switch that is on visible while pressed, hovered or focused, when
+    // Material 3 would draw it in primaryContainer, the same color as the track
+    switchTheme: SwitchThemeData(
+      thumbColor: .resolveWith(
+        (Set<WidgetState> states) =>
+            states.contains(WidgetState.selected) ? accentContrastColor : null,
+      ),
+    ),
   );
 }
