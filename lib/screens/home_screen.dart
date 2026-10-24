@@ -176,7 +176,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       // Share the UUID value in the current format via the platform's share dialog
       case .share:
         SharePlus.instance.share(
-          ShareParams(text: _uuidFormatValue, subject: strings.shareSubject),
+          ShareParams(
+            text: _uuidFormatValue,
+            title: strings.shareTitle,
+            subject: strings.shareSubject,
+          ),
         );
         break;
 

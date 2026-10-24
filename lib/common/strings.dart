@@ -47,6 +47,7 @@ const uuidFormatTabs = <UuidFormat, String>{
   .base64url: 'Base64Url',
 };
 
+const shareTitle = 'Share UUID';
 const shareSubject = 'UUID from TapGuid';
 
 // -----------------------------------------------------------------------------------------------
