@@ -11,12 +11,13 @@ import 'types.dart';
 
 /// Stores the UUID version to use when generating UUIDs.
 ///
-/// Added in version 4.0.0.
-var uuidVersion = AppPreferenceEx<UuidVersion, int>(
+/// Added in version 4.0.0, and stored by name since version 4.1.0, so that adding a version
+/// cannot change a stored choice.
+var uuidVersion = AppPreferenceEx<UuidVersion, String>(
   defaultValue: .v4,
-  key: 'uuidVersion',
-  valueLoader: (int value) => .values[value],
-  valueSaver: (UuidVersion version) => version.index,
+  key: 'uuidVersionName',
+  valueLoader: (String name) => .values.asNameMap()[name] ?? .v4,
+  valueSaver: (UuidVersion version) => version.name,
 );
 
 /// Stores whether to use uppercase letters in generated UUIDs.
