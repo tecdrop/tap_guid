@@ -28,20 +28,30 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  # The Flutter framework
   flutter:
     sdk: flutter
 
-  simple_app_preferences: ^0.0.4
+  # iOS-style icons font from the Flutter template; not used by the app yet
+  cupertino_icons: ^2.0.0
 
-  shared_preferences: ^2.5.6
-  uuid: ^4.6.0
-  url_launcher: ^6.3.3
+  # Material widgets and theming, from the standalone package instead of the SDK
+  material_ui: ^1.8.0
+
+  # Shares the UUID through the platform's share sheet
   share_plus: ^13.3.1
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^2.0.0
-  material_ui: ^1.8.0
+  # Saves the app settings on the device
+  shared_preferences: ^2.5.6
+
+  # Typed settings with default values, stored through shared_preferences
+  simple_app_preferences: ^0.0.4
+
+  # Opens the help, store, and web search links in the browser or store app
+  url_launcher: ^6.3.3
+
+  # Generates the version 1, 4, 6, 7, and 8 UUIDs
+  uuid: ^4.6.0
 
 dev_dependencies:
   flutter_test:
