@@ -32,6 +32,25 @@ void main() {
     }
   });
 
+  testWidgets('UniformWrappableText is read as one value by screen readers', (
+    WidgetTester tester,
+  ) async {
+    const testText = '123e4567-e89b-12d3';
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: Center(child: UniformWrappableText(testText))),
+      ),
+    );
+
+    // One semantics node with the whole text, and none for single characters
+    expect(find.bySemanticsLabel(testText), findsOneWidget);
+    expect(find.bySemanticsLabel('1'), findsNothing);
+
+    semantics.dispose();
+  });
+
   testWidgets('getWidestCharacterWidth calculates correct width', (WidgetTester tester) async {
     // Test with different font sizes
     const smallStyle = TextStyle(fontSize: 10.0);

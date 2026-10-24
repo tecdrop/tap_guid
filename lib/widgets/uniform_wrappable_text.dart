@@ -31,17 +31,22 @@ class UniformWrappableText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: .center,
-      children: data
-          .split('')
-          .map(
-            (String char) => SizedBox(
-              width: characterWidth ?? getWidestCharacterWidth(style),
-              child: Text(char, textAlign: .center, style: style),
-            ),
-          )
-          .toList(),
+    // Screen readers read the whole text as one value, not one character at a time
+    return Semantics(
+      label: data,
+      excludeSemantics: true,
+      child: Wrap(
+        alignment: .center,
+        children: data
+            .split('')
+            .map(
+              (String char) => SizedBox(
+                width: characterWidth ?? getWidestCharacterWidth(style),
+                child: Text(char, textAlign: .center, style: style),
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }
