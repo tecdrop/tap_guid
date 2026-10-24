@@ -19,11 +19,15 @@ class AppDrawer extends StatelessWidget {
   const AppDrawer({
     super.key,
     required this.headerColor,
+    this.selectedItem,
     this.onItemTap,
   });
 
   /// The background color of the app drawer header.
   final Color headerColor;
+
+  /// The item of the current screen, shown as selected.
+  final AppDrawerItems? selectedItem;
 
   /// Called when an item in the drawer is tapped.
   final void Function(AppDrawerItems item)? onItemTap;
@@ -114,12 +118,11 @@ class AppDrawer extends StatelessWidget {
     required String title,
     String? subtitle,
     required AppDrawerItems item,
-    bool selected = false,
   }) {
     return ListTile(
       leading: icon != null ? Icon(icon) : null,
       onTap: () => onItemTap?.call(item),
-      selected: selected,
+      selected: item == selectedItem,
       style: .drawer,
       subtitle: subtitle != null ? Text(subtitle) : null,
       title: Text(title),

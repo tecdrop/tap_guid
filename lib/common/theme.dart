@@ -26,6 +26,7 @@ ThemeData getAppTheme(Brightness brightness) {
       indicatorColor: accentColor,
     ),
     dividerTheme: DividerThemeData(color: accentColor.withValues(alpha: 0.125)),
+    listTileTheme: ListTileThemeData(selectedTileColor: accentColor.withValues(alpha: 0.1)),
     chipTheme: ChipThemeData(
       showCheckmark: false,
       color: .resolveWith(

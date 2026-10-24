@@ -216,7 +216,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: HomeAppBar(tabController: _tabController, onAction: _onAppBarAction),
 
       // The app drawer with screen navigation and app related urls
-      drawer: AppDrawer(headerColor: backColor, onItemTap: _onDrawerItemTap),
+      drawer: AppDrawer(
+        headerColor: backColor,
+        selectedItem: .guidGenerator,
+        onItemTap: _onDrawerItemTap,
+      ),
 
       body: prefs.uuidColor.value
           // Use an animated container to animate background color changes if UUID color is enabled
