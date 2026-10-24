@@ -3,8 +3,9 @@
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/custom_icons.dart' as custom_icons;
 import '../../common/strings.dart' as strings;

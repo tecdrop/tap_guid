@@ -2,7 +2,7 @@
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Returns the black or white contrast color of the given [Color].
 Color contrastColor(Color color) {

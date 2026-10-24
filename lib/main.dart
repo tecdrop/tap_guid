@@ -3,7 +3,7 @@
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'common/preferences.dart' as prefs;
 import 'common/strings.dart' as strings;
