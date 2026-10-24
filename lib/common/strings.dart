@@ -31,11 +31,6 @@ String copiedErrorSnack(String value) => 'Failed to copy $value to clipboard';
 const copyColorAction = 'Copy color code';
 const shareTooltip = 'Share UUID';
 const uniquenessSearchAction = 'Uniqueness search';
-const settingsAction = 'Settings';
-const helpAction = 'Help & support';
-const openSourceAction = 'Star on GitHub';
-const rateAction = 'Rate app';
-const proAppsAction = 'Try our Pro apps';
 
 const uuidFormatTabs = <UuidFormat, String>{
   .standard: 'Standard',
