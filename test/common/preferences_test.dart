@@ -33,4 +33,29 @@ void main() {
 
     expect(prefs.uuidVersion.value, equals(UuidVersion.v4));
   });
+
+  test('The UUID format is saved by name', () async {
+    SharedPreferences.setMockInitialValues({});
+    await prefs.load();
+
+    prefs.uuidFormat.value = .braces;
+    await prefs.uuidFormat.saveValue();
+
+    final stored = await SharedPreferences.getInstance();
+    expect(stored.getString('uuidFormatName'), equals('braces'));
+  });
+
+  test('The UUID format is loaded by name', () async {
+    SharedPreferences.setMockInitialValues({'uuidFormatName': 'base64'});
+    await prefs.load();
+
+    expect(prefs.uuidFormat.value, equals(UuidFormat.base64));
+  });
+
+  test('An unknown UUID format name falls back to standard', () async {
+    SharedPreferences.setMockInitialValues({'uuidFormatName': 'unknown'});
+    await prefs.load();
+
+    expect(prefs.uuidFormat.value, equals(UuidFormat.standard));
+  });
 }

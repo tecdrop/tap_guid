@@ -81,10 +81,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: strings.uuidFormatTabs.length);
+    _tabController = TabController(
+      vsync: this,
+      length: strings.uuidFormatTabs.length,
+      initialIndex: prefs.uuidFormat.value.index,
+    );
     _tabController.addListener(() {
-      // Update the UUID format display when the tab changes
+      // Update the UUID format display when the tab changes, and remember it for the next launch
       setState(() => _updateUuidFormat());
+      prefs.uuidFormat.value = .values[_tabController.index];
     });
 
     // Generate the initial UUID (preferences are already loaded in main.dart)

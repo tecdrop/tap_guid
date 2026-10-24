@@ -33,6 +33,17 @@ var uppercaseDigits = AppPreference<bool>(
 /// Added in version 4.0.0.
 var uuidColor = AppPreference<bool>(defaultValue: true, key: 'uuidColor');
 
+/// Stores the format of the selected tab, so the app opens on it.
+///
+/// Added in version 4.1.0, and stored by name so that adding a format cannot change a stored
+/// choice.
+var uuidFormat = AppPreferenceEx<UuidFormat, String>(
+  defaultValue: .standard,
+  key: 'uuidFormatName',
+  valueLoader: (String name) => .values.asNameMap()[name] ?? .standard,
+  valueSaver: (UuidFormat format) => format.name,
+);
+
 /// Loads app settings from persistent storage.
 Future<void> load() async {
   try {
@@ -40,6 +51,7 @@ Future<void> load() async {
     uuidVersion.loadValue(preferences);
     uppercaseDigits.loadValue(preferences);
     uuidColor.loadValue(preferences);
+    uuidFormat.loadValue(preferences);
   } on Exception catch (e) {
     // We can ignore errors here, as the default values will be used.
     if (kDebugMode) debugPrint('Error loading preferences: $e');

@@ -5,12 +5,20 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:tap_guid/common/preferences.dart' as prefs;
 import 'package:tap_guid/common/strings.dart' as strings;
 import 'package:tap_guid/screens/home_screen.dart';
 import 'package:tap_guid/widgets/uniform_wrappable_text.dart';
 
 void main() {
+  setUp(() async {
+    // Load the preferences as main() does, starting on the Standard tab
+    SharedPreferences.setMockInitialValues({'uuidFormatName': 'standard'});
+    await prefs.load();
+  });
+
   testWidgets('HomeScreen displays a UUID on launch', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
@@ -98,5 +106,24 @@ void main() {
     );
 
     semantics.dispose();
+  });
+
+  testWidgets('HomeScreen opens on the saved UUID format', (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'uuidFormatName': 'braces'});
+    await prefs.load();
+
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+
+    final text = (tester.widget(find.byType(UniformWrappableText)) as UniformWrappableText).data;
+    expect(text.startsWith('{'), isTrue);
+  });
+
+  testWidgets('Switching tabs saves the UUID format', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+    await tester.tap(find.text('Digits'));
+    await tester.pumpAndSettle();
+
+    final stored = await SharedPreferences.getInstance();
+    expect(stored.getString('uuidFormatName'), equals('digits'));
   });
 }
