@@ -49,7 +49,7 @@ flutter:
   # Bundles the Material Icons font
   uses-material-design: true
 
-  # Icon font made with FlutterIcon for the drawer's GitHub icon
+  # Icon font for the drawer's TapGuid symbol and GitHub icon
   fonts:
     - family: CustomIcons
       fonts:

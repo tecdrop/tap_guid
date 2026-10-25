@@ -132,7 +132,7 @@ class AppDrawer extends StatelessWidget {
 
 /// The app drawer header.
 ///
-/// It is filled with a background color, and displays the app name.
+/// It is filled with a background color, and displays the app symbol.
 class _AppDrawerHeader extends StatelessWidget {
   const _AppDrawerHeader({
     super.key, // ignore: unused_element_parameter
@@ -149,11 +149,11 @@ class _AppDrawerHeader extends StatelessWidget {
       margin: .zero,
       decoration: BoxDecoration(color: color),
       child: Center(
-        child: Text(
-          strings.appName,
-          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-            color: color_utils.contrastColor(color),
-          ),
+        child: Icon(
+          custom_icons.tapguid,
+          size: 112.0,
+          color: color_utils.contrastColor(color),
+          semanticLabel: strings.appName,
         ),
       ),
     );
