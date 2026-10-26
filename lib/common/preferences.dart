@@ -11,8 +11,8 @@ import 'types.dart';
 
 /// Stores the UUID version to use when generating UUIDs.
 ///
-/// Added in version 4.0.0, and stored by name since version 4.1.0, so that adding a version
-/// cannot change a stored choice.
+/// Added in version 4.0.0, and stored by name so that adding a version cannot change a stored
+/// choice.
 var uuidVersion = AppPreferenceEx<UuidVersion, String>(
   defaultValue: .v4,
   key: 'uuidVersionName',
@@ -53,7 +53,8 @@ Future<void> load() async {
     uuidColor.loadValue(preferences);
     uuidFormat.loadValue(preferences);
   } catch (e) {
-    // We can ignore errors here, as the default values will be used.
+    // Catch Errors too, like a TypeError from a wrongly typed value: this runs before runApp, so
+    // anything uncaught would keep the app on the splash screen. The defaults are used instead.
     if (kDebugMode) debugPrint('Error loading preferences: $e');
   }
 }
