@@ -2,7 +2,6 @@
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
-import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'common/preferences.dart' as prefs;
@@ -13,13 +12,8 @@ import 'screens/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load preferences with timeout - use defaults if it takes too long
-  await prefs.load().timeout(
-    const Duration(seconds: 1),
-    onTimeout: () {
-      if (kDebugMode) debugPrint('Preferences load timed out, using defaults');
-    },
-  );
+  // Load preferences before runApp, so the first UUID is generated with the stored settings
+  await prefs.load();
 
   runApp(const TapGuidApp());
 }

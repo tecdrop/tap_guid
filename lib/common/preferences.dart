@@ -52,7 +52,7 @@ Future<void> load() async {
     uppercaseDigits.loadValue(preferences);
     uuidColor.loadValue(preferences);
     uuidFormat.loadValue(preferences);
-  } on Exception catch (e) {
+  } catch (e) {
     // We can ignore errors here, as the default values will be used.
     if (kDebugMode) debugPrint('Error loading preferences: $e');
   }
