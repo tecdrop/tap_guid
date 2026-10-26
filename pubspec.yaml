@@ -16,9 +16,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Font for the CupertinoIcons that material_ui uses, which the build warns about if missing
-  cupertino_icons: ^2.0.0
-
   # Material widgets and theming, from the standalone package instead of the SDK
   material_ui: ^1.8.0
 
