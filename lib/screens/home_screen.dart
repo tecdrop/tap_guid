@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 
 import '../common/preferences.dart' as prefs;
 import '../common/strings.dart' as strings;
+import '../common/types.dart';
 import '../common/urls.dart' as urls;
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart' as utils;
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     _tabController = TabController(
       vsync: this,
-      length: strings.uuidFormatTabs.length,
+      length: UuidFormat.values.length,
       initialIndex: prefs.uuidFormat.value.index,
     );
     _tabController.addListener(() {

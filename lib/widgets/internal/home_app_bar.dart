@@ -5,6 +5,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../../common/strings.dart' as strings;
+import '../../common/types.dart';
 
 /// The actions available in the app bar of the home screen.
 enum HomeAppBarActions { copy, share, copyColor, uniquenessSearch }
@@ -61,13 +62,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ],
-      // The UUID format tabs
+      // The UUID format tabs, in enum order, so that a tab index is also a format index
       bottom: TabBar(
         controller: tabController,
         isScrollable: true,
-        tabs: strings.uuidFormatTabs.keys
-            .map((format) => Tab(text: strings.uuidFormatTabs[format]))
-            .toList(),
+        tabs: UuidFormat.values.map((format) => Tab(text: strings.uuidFormatTabs[format])).toList(),
       ),
     );
   }
