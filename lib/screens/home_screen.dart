@@ -1,8 +1,8 @@
-// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Copyright 2020-2026 Tecdrop SRL. All rights reserved.
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
@@ -12,7 +12,6 @@ import '../common/strings.dart' as strings;
 import '../common/types.dart';
 import '../common/urls.dart' as urls;
 import '../utils/color_utils.dart' as color_utils;
-// import '../utils/internal_utils.dart';
 import '../utils/utils.dart' as utils;
 import '../utils/uuid_utils.dart';
 import '../widgets/internal/app_drawer.dart';
@@ -33,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   /// The UUID generator.
-  final Uuid _uuid = const Uuid();
+  final _uuid = const Uuid();
 
   /// The value of the current UUID.
   late String _uuidValue;
@@ -56,11 +55,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   /// Generates a new UUID and updates the display.
   void _genNewUuid() {
     _uuidValue = switch (prefs.uuidVersion.value) {
-      UuidVersion.v1 => _uuid.v1(),
-      UuidVersion.v4 => _uuid.v4(),
-      UuidVersion.v6 => _uuid.v6(),
-      UuidVersion.v7 => _uuid.v7(),
-      UuidVersion.v8 => _uuid.v8(),
+      .v1 => _uuid.v1(),
+      .v4 => _uuid.v4(),
+      .v6 => _uuid.v6(),
+      .v7 => _uuid.v7(),
+      .v8 => _uuid.v8(),
     };
 
     // TODO: Make sure the following line is commented out in production
@@ -74,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void _updateUuidFormat() {
     _uuidFormatValue = formatUuid(
       _uuidValue,
-      format: UuidFormat.values[_tabController.index],
+      format: .values[_tabController.index],
       uppercase: prefs.uppercaseDigits.value,
     );
   }
@@ -83,19 +82,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: strings.uuidFormatTabs.length);
+    _tabController = TabController(
+      vsync: this,
+      length: UuidFormat.values.length,
+      initialIndex: prefs.uuidFormat.value.index,
+    );
     _tabController.addListener(() {
-      // Update the UUID format display when the tab changes
+      // Update the UUID format display when the tab changes, and remember it for the next launch
+      if (_tabController.index == prefs.uuidFormat.value.index) return;
       setState(() => _updateUuidFormat());
+      prefs.uuidFormat.value = .values[_tabController.index];
     });
 
-    // Load app preferences
-    () async {
-      await prefs.load();
-      setState(() {});
-    }();
-
-    // Generate a new UUID when the screen is first displayed
+    // Generate the initial UUID (preferences are already loaded in main.dart)
     _genNewUuid();
   }
 
@@ -104,11 +103,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.didChangeDependencies();
 
     // Cache the text style and character width for the UUID display
-    final bool isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
-    _uuidTextStyle =
-        isLargeScreen
-            ? Theme.of(context).textTheme.displaySmall!
-            : Theme.of(context).textTheme.headlineLarge!;
+    final isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
+    _uuidTextStyle = isLargeScreen
+        ? Theme.of(context).textTheme.displaySmall!
+        : Theme.of(context).textTheme.headlineLarge!;
     _uuidCharacterWidth = UniformWrappableText.getWidestCharacterWidth(_uuidTextStyle);
   }
 
@@ -125,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   /// Navigate to the settings screen and update the UUID format if necessary after returning.
   Future<void> _gotoSettingsScreen() async {
-    final UuidVersion oldVersion = prefs.uuidVersion.value;
+    final oldVersion = prefs.uuidVersion.value;
     await utils.navigateTo(context: context, screen: const SettingsScreen());
     setState(
       // Generate a new UUID if the UUID version has changed, or just update the format
@@ -140,60 +138,71 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     switch (item) {
       // Open the urls of the Pro apps
-      case AppDrawerItems.pbwp:
+      case .pbwp:
         utils.launchUrlExternal(context, urls.pbwp);
         break;
-      case AppDrawerItems.rcwp:
+      case .rcwp:
         utils.launchUrlExternal(context, urls.rcwp);
         break;
 
-      case AppDrawerItems.guidGenerator:
+      case .guidGenerator:
         // Do nothing - simply stay on the Home screen as we are already there
         break;
 
       // Open the app settings screen and update the display when the user returns
-      case AppDrawerItems.settings:
+      case .settings:
         _gotoSettingsScreen();
         break;
 
       // Open the app home page in the default browser
-      case AppDrawerItems.help:
+      case .help:
         utils.launchUrlExternal(context, urls.help);
         break;
 
       // Open the open source repository in the default browser
-      case AppDrawerItems.openSource:
+      case .openSource:
         utils.launchUrlExternal(context, urls.openSource);
         break;
 
       // Open the Google Play app page to allow the user to rate the app.
-      case AppDrawerItems.rateApp:
+      case .rateApp:
         utils.launchUrlExternal(context, urls.rateApp);
         break;
     }
+  }
+
+  /// Copies the UUID value in the current format to the clipboard.
+  void _copyUuid() {
+    // Do not display the UUID value in the snackbar, as it may be too long for a snackbar
+    utils.copyToClipboard(context, _uuidFormatValue, valueToDisplay: strings.uuid);
   }
 
   /// Perform the actions of the app bar.
   void _onAppBarAction(HomeAppBarActions action) {
     switch (action) {
       // Copy the UUID value in the current format to the clipboard
-      case HomeAppBarActions.copy:
-        // Do not display the UUID value in the snackbar, as it may be too long for a snackbar
-        utils.copyToClipboard(context, _uuidFormatValue, valueToDisplay: strings.uuid);
+      case .copy:
+        _copyUuid();
         break;
 
       // Share the UUID value in the current format via the platform's share dialog
-      case HomeAppBarActions.share:
-        Share.share(_uuidFormatValue, subject: strings.shareSubject);
+      case .share:
+        SharePlus.instance.share(
+          ShareParams(
+            text: _uuidFormatValue,
+            title: strings.shareTitle,
+            subject: strings.shareSubject,
+          ),
+        );
         break;
 
       // Copy the color of the UUID to the clipboard
-      case HomeAppBarActions.copyColor:
+      case .copyColor:
         utils.copyToClipboard(context, color_utils.toHexString(_uuidColor));
         break;
 
       // Perform a web search for the Uuid value in the current format.
-      case HomeAppBarActions.uniquenessSearch:
+      case .uniquenessSearch:
         utils.launchUrlExternal(context, urls.webSearch(_uuidFormatValue));
         break;
     }
@@ -201,18 +210,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final bool isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
-    final EdgeInsets padding = EdgeInsets.symmetric(horizontal: isLargeScreen ? 64.0 : 16.0);
+    final isLargeScreen = MediaQuery.sizeOf(context).width > 600.0;
+    final padding = EdgeInsets.symmetric(horizontal: isLargeScreen ? 64.0 : 16.0);
 
-    final Color backColor =
-        prefs.uuidColor.value ? _uuidColor : Theme.of(context).colorScheme.tertiary;
-    final Color foreColor = color_utils.contrastColor(backColor);
+    final backColor = prefs.uuidColor.value ? _uuidColor : Theme.of(context).colorScheme.tertiary;
+    final foreColor = color_utils.contrastColor(backColor);
 
-    // The UUID display with uniform width characters
-    final Widget uuidText = UniformWrappableText(
-      _uuidFormatValue,
-      style: _uuidTextStyle.copyWith(color: foreColor),
-      characterWidth: _uuidCharacterWidth,
+    // The UUID display with uniform width characters, copied to the clipboard when tapped
+    final Widget uuidText = Semantics(
+      onTapHint: strings.copyTooltip,
+      child: GestureDetector(
+        behavior: .opaque,
+        onTap: _copyUuid,
+        child: UniformWrappableText(
+          _uuidFormatValue,
+          style: _uuidTextStyle.copyWith(color: foreColor),
+          characterWidth: _uuidCharacterWidth,
+        ),
+      ),
     );
 
     return Scaffold(
@@ -220,27 +235,30 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: HomeAppBar(tabController: _tabController, onAction: _onAppBarAction),
 
       // The app drawer with screen navigation and app related urls
-      drawer: AppDrawer(headerColor: backColor, onItemTap: _onDrawerItemTap),
+      drawer: AppDrawer(
+        headerColor: backColor,
+        selectedItem: .guidGenerator,
+        onItemTap: _onDrawerItemTap,
+      ),
 
-      body:
-          prefs.uuidColor.value
-              // Use an animated container to animate background color changes if UUID color is enabled
-              ? AnimatedContainer(
-                // Use an almost unnoticeable duration for a subtle color change effect
-                duration: const Duration(milliseconds: 100),
-                color: backColor,
-                width: double.infinity,
-                height: double.infinity,
-                padding: padding,
-                alignment: Alignment.center,
-                child: uuidText,
-              )
-              : Container(
-                color: backColor,
-                padding: padding,
-                alignment: Alignment.center,
-                child: uuidText,
-              ),
+      body: prefs.uuidColor.value
+          // Use an animated container to animate background color changes if UUID color is enabled
+          ? AnimatedContainer(
+              // Use an almost unnoticeable duration for a subtle color change effect
+              duration: const Duration(milliseconds: 100),
+              color: backColor,
+              width: .infinity,
+              height: .infinity,
+              padding: padding,
+              alignment: .center,
+              child: uuidText,
+            )
+          : Container(
+              color: backColor,
+              padding: padding,
+              alignment: .center,
+              child: uuidText,
+            ),
 
       // The refresh FAB that generates a new UUID
       floatingActionButton: FloatingActionButton.large(

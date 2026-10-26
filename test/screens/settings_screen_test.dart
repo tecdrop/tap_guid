@@ -1,9 +1,9 @@
-// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Copyright 2020-2026 Tecdrop SRL. All rights reserved.
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +34,7 @@ void main() {
 
   testWidgets('Changing UUID version updates preference', (WidgetTester tester) async {
     // Start with v4 selected
-    prefs.uuidVersion.value = UuidVersion.v4;
+    prefs.uuidVersion.value = .v4;
 
     await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
 

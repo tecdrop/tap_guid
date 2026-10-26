@@ -1,8 +1,8 @@
-// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Copyright 2020-2026 Tecdrop SRL. All rights reserved.
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A widget that displays wrappable text with uniform width characters.
 class UniformWrappableText extends StatelessWidget {
@@ -21,9 +21,9 @@ class UniformWrappableText extends StatelessWidget {
   ///
   /// Uses the character 'W' to calculate the width, as it is usually the widest character.
   static double getWidestCharacterWidth(TextStyle? style) {
-    final TextPainter textPainter = TextPainter(
+    final textPainter = TextPainter(
       text: TextSpan(text: 'W', style: style),
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
     )..layout();
 
     return textPainter.size.width;
@@ -31,18 +31,22 @@ class UniformWrappableText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      children:
-          data
-              .split('')
-              .map(
-                (String char) => SizedBox(
-                  width: characterWidth ?? getWidestCharacterWidth(style),
-                  child: Text(char, textAlign: TextAlign.center, style: style),
-                ),
-              )
-              .toList(),
+    // Screen readers read the whole text as one value, not one character at a time
+    return Semantics(
+      label: data,
+      excludeSemantics: true,
+      child: Wrap(
+        alignment: .center,
+        children: data
+            .split('')
+            .map(
+              (String char) => SizedBox(
+                width: characterWidth ?? getWidestCharacterWidth(style),
+                child: Text(char, textAlign: .center, style: style),
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

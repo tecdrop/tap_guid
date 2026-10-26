@@ -1,39 +1,49 @@
-// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Copyright 2020-2026 Tecdrop SRL. All rights reserved.
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // import '../utils/color_utils.dart' as color_utils;
 
 /// Returns the light or dark theme for the app.
 ThemeData getAppTheme(Brightness brightness) {
-  final Color accentColor = brightness == Brightness.dark ? Colors.white : Colors.black;
-  final Color accentContrastColor = brightness == Brightness.dark ? Colors.black : Colors.white;
+  final accentColor = brightness == .dark ? Colors.white : Colors.black;
+  final accentContrastColor = brightness == .dark ? Colors.black : Colors.white;
 
-  final ColorScheme colorScheme =
-      brightness == Brightness.dark ? const ColorScheme.dark() : const ColorScheme.light();
+  final colorScheme = brightness == .dark ? const ColorScheme.dark() : const ColorScheme.light();
 
   return ThemeData(
     useMaterial3: true,
     colorScheme: colorScheme.copyWith(
       primary: accentColor,
-      tertiary: brightness == Brightness.dark ? Color(0xFF4D4D4D) : Color(0xFFBFBFBF),
+      tertiary: brightness == .dark ? const Color(0xFF4D4D4D) : const Color(0xFFBFBFBF),
       primaryContainer: accentColor,
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       unselectedLabelColor: accentColor.withValues(alpha: 0.5),
       labelColor: accentColor,
       indicatorColor: accentColor,
     ),
     dividerTheme: DividerThemeData(color: accentColor.withValues(alpha: 0.125)),
+    listTileTheme: ListTileThemeData(selectedTileColor: accentColor.withValues(alpha: 0.1)),
     chipTheme: ChipThemeData(
       showCheckmark: false,
-      color: WidgetStateProperty.resolveWith(
+      color: .resolveWith(
         (Set<WidgetState> states) =>
             states.contains(WidgetState.selected) ? accentColor : accentContrastColor,
       ),
       secondaryLabelStyle: TextStyle(color: accentContrastColor),
+    ),
+    // Keep the thumb of a switch that is on visible while pressed, hovered or focused, when
+    // Material 3 would draw it in primaryContainer, the same color as the track
+    switchTheme: SwitchThemeData(
+      thumbColor: .resolveWith(
+        (Set<WidgetState> states) =>
+            states.contains(WidgetState.selected) && !states.contains(WidgetState.disabled)
+            ? accentContrastColor
+            : null,
+      ),
     ),
   );
 }

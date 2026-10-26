@@ -1,11 +1,11 @@
-// Copyright 2020-2025 Tecdrop SRL. All rights reserved.
+// Copyright 2020-2026 Tecdrop SRL. All rights reserved.
 // Use of this source code is governed by an MIT-style license that can be found
 // in the LICENSE file or at https://www.tecdrop.com/tapguid/license/.
 
 import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/custom_icons.dart' as custom_icons;
 import '../../common/strings.dart' as strings;
@@ -16,10 +16,18 @@ enum AppDrawerItems { pbwp, rcwp, guidGenerator, settings, help, openSource, rat
 
 /// The main Material Design drawer of the app, with the app screens and app urls.
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key, required this.headerColor, this.onItemTap});
+  const AppDrawer({
+    super.key,
+    required this.headerColor,
+    this.selectedItem,
+    this.onItemTap,
+  });
 
   /// The background color of the app drawer header.
   final Color headerColor;
+
+  /// The item of the current screen, shown as selected.
+  final AppDrawerItems? selectedItem;
 
   /// Called when an item in the drawer is tapped.
   final void Function(AppDrawerItems item)? onItemTap;
@@ -36,22 +44,22 @@ class AppDrawer extends StatelessWidget {
           // The "Support our free apps" section
           if (kIsWeb || Platform.isAndroid) ...[
             ListTile(
-              style: ListTileStyle.drawer,
-              title: Text(strings.supportOurAppsDrawerItem),
+              style: .drawer,
+              title: const Text(strings.supportOurAppsDrawerItem),
               titleTextStyle: Theme.of(context).textTheme.titleSmall,
-              visualDensity: VisualDensity.compact,
+              visualDensity: .compact,
             ),
             _buildItem(
               context,
               icon: Icons.loyalty_outlined,
               title: strings.pbwpDrawerItem,
-              item: AppDrawerItems.pbwp,
+              item: .pbwp,
             ),
             _buildItem(
               context,
               icon: Icons.loyalty_outlined,
               title: strings.rcwpDrawerItem,
-              item: AppDrawerItems.rcwp,
+              item: .rcwp,
             ),
             const Divider(),
           ],
@@ -61,7 +69,7 @@ class AppDrawer extends StatelessWidget {
             context,
             icon: Icons.home_outlined,
             title: strings.guidGeneratorDrawerItem,
-            item: AppDrawerItems.guidGenerator,
+            item: .guidGenerator,
           ),
 
           // Settings drawer item
@@ -69,7 +77,7 @@ class AppDrawer extends StatelessWidget {
             context,
             icon: Icons.settings_outlined,
             title: strings.settingsDrawerItem,
-            item: AppDrawerItems.settings,
+            item: .settings,
           ),
 
           const Divider(),
@@ -79,7 +87,7 @@ class AppDrawer extends StatelessWidget {
             context,
             icon: Icons.support_outlined,
             title: strings.helpDrawerItem,
-            item: AppDrawerItems.help,
+            item: .help,
           ),
 
           // The open-source drawer item
@@ -88,7 +96,7 @@ class AppDrawer extends StatelessWidget {
             icon: custom_icons.github,
             title: strings.openSourceDrawerItem,
             subtitle: strings.openSourceDrawerItemSubtitle,
-            item: AppDrawerItems.openSource,
+            item: .openSource,
           ),
 
           // Rate App drawer item
@@ -96,7 +104,7 @@ class AppDrawer extends StatelessWidget {
             context,
             icon: Icons.star_rate,
             title: strings.rateAppDrawerItem,
-            item: AppDrawerItems.rateApp,
+            item: .rateApp,
           ),
         ],
       ),
@@ -110,13 +118,12 @@ class AppDrawer extends StatelessWidget {
     required String title,
     String? subtitle,
     required AppDrawerItems item,
-    bool selected = false,
   }) {
     return ListTile(
       leading: icon != null ? Icon(icon) : null,
       onTap: () => onItemTap?.call(item),
-      selected: selected,
-      style: ListTileStyle.drawer,
+      selected: item == selectedItem,
+      style: .drawer,
       subtitle: subtitle != null ? Text(subtitle) : null,
       title: Text(title),
     );
@@ -125,7 +132,7 @@ class AppDrawer extends StatelessWidget {
 
 /// The app drawer header.
 ///
-/// It is filled with a background color, and displays the app name.
+/// It is filled with a background color, and displays the app symbol.
 class _AppDrawerHeader extends StatelessWidget {
   const _AppDrawerHeader({
     super.key, // ignore: unused_element_parameter
@@ -138,15 +145,15 @@ class _AppDrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DrawerHeader(
-      padding: EdgeInsets.zero,
-      margin: EdgeInsets.zero,
+      padding: .zero,
+      margin: .zero,
       decoration: BoxDecoration(color: color),
       child: Center(
-        child: Text(
-          strings.appName,
-          style: Theme.of(
-            context,
-          ).textTheme.headlineMedium!.copyWith(color: color_utils.contrastColor(color)),
+        child: Icon(
+          custom_icons.tapguid,
+          size: 112.0,
+          color: color_utils.contrastColor(color),
+          semanticLabel: strings.appName,
         ),
       ),
     );
