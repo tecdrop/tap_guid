@@ -45,6 +45,9 @@ dev_dependencies:
   # Recommended lints, enabled in analysis_options.yaml
   flutter_lints: ^6.0.0
 
+  # In-memory preference store that tests extend to count writes
+  shared_preferences_platform_interface: ^2.4.2
+
 flutter:
   # Bundles the Material Icons font
   uses-material-design: true

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 
 import 'package:tap_guid/common/preferences.dart' as prefs;
 import 'package:tap_guid/common/strings.dart' as strings;
@@ -126,4 +127,30 @@ void main() {
     final stored = await SharedPreferences.getInstance();
     expect(stored.getString('uuidFormatName'), equals('digits'));
   });
+
+  testWidgets('Switching tabs saves the UUID format once', (WidgetTester tester) async {
+    final store = _CountingStore({'flutter.uuidFormatName': 'standard'});
+    SharedPreferencesStorePlatform.instance = store;
+    SharedPreferences.resetStatic();
+    await prefs.load();
+
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+    await tester.tap(find.text('Digits'));
+    await tester.pumpAndSettle();
+
+    expect(store.writes, equals(1));
+  });
+}
+
+/// An in-memory preference store that counts its writes.
+class _CountingStore extends InMemorySharedPreferencesStore {
+  _CountingStore(super.data) : super.withData();
+
+  var writes = 0;
+
+  @override
+  Future<bool> setValue(String valueType, String key, Object value) {
+    writes++;
+    return super.setValue(valueType, key, value);
+  }
 }

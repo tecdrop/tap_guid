@@ -88,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
     _tabController.addListener(() {
       // Update the UUID format display when the tab changes, and remember it for the next launch
+      if (_tabController.index == prefs.uuidFormat.value.index) return;
       setState(() => _updateUuidFormat());
       prefs.uuidFormat.value = .values[_tabController.index];
     });
