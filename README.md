@@ -1,11 +1,10 @@
 # TapGuid - UUID Generator
 
-[![Version badge](https://img.shields.io/github/v/tag/tecdrop/tap_guid?color=forestgreen&label=version)](https://github.com/tecdrop/tap_guid/releases)
-[![PWA Installable badge](https://img.shields.io/badge/-installable-5A0FC8?logo=pwa)](https://tapguid.tecdrop.com/)
-[![MIT License badge](https://img.shields.io/github/license/tecdrop/tap_guid?color=9c0000)](LICENSE)
-[![GitHub Code Size badge](https://img.shields.io/github/languages/code-size/tecdrop/tap_guid)](https://github.com/tecdrop/tap_guid)
-[![Style badge](https://img.shields.io/badge/style-flutter__lints-4BC0F5.svg)](https://pub.dev/packages/flutter_lints)
-[![Contributions Welcome badge](https://img.shields.io/badge/contributions-welcome-cornflowerblue)](#Contributing)
+[![Version](https://img.shields.io/github/v/release/tecdrop/tap_guid?color=forestgreen&label=version&cacheSeconds=3600)](https://github.com/tecdrop/tap_guid/releases)
+[![Platform: Web and Android](https://img.shields.io/badge/platform-Web_%7C_Android-33B3B3)](#try-tapguid)
+[![Built with Flutter](https://img.shields.io/badge/built_with-Flutter-02569B?logo=flutter)](https://flutter.dev/)
+[![MIT License](https://img.shields.io/badge/license-MIT-9c0000)](LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/tecdrop/tap_guid/total?cacheSeconds=86400)](https://github.com/tecdrop/tap_guid/releases)
 
 TapGuid is a Flutter app for generating and managing universally unique identifiers (UUIDs), also known as globally unique identifiers (GUIDs). It provides a simple interface for creating, formatting, and sharing UUIDs across different platforms (currently Android and web).
 
