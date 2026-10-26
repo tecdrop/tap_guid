@@ -40,7 +40,9 @@ ThemeData getAppTheme(Brightness brightness) {
     switchTheme: SwitchThemeData(
       thumbColor: .resolveWith(
         (Set<WidgetState> states) =>
-            states.contains(WidgetState.selected) ? accentContrastColor : null,
+            states.contains(WidgetState.selected) && !states.contains(WidgetState.disabled)
+            ? accentContrastColor
+            : null,
       ),
     ),
   );
